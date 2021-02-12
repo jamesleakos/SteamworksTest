@@ -1,0 +1,532 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095f1ccd555b42745b3c813312fad489, type: 3}
+  m_Name: New Example Inventory Item Definition
+  m_EditorClassIdentifier: 
+  DeveloperDescription: 
+  DefinitionID:
+    m_SteamItemDef: 1234
+  Recipes: []
+  ValveItemDefAttributes:
+  - attribute: 0
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 1
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 9
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 10
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 11
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 12
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 13
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue:
+    - category: Category
+      tag: Tag
+    - category: Category
+      tag: Tag
+    - category: Category
+      tag: Tag
+    - category: Category
+      tag: Tag
+    tagGeneratorValue: []
+  - attribute: 15
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray:
+    - 
+    - 
+    - 
+    - 
+    - 
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 2
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 3
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue:
+    - type: 2
+      app:
+        m_AppId: 480
+      minutes: 15
+      achievment: {fileID: 0}
+    - type: 2
+      app:
+        m_AppId: 480
+      minutes: 15
+      achievment: {fileID: 0}
+    - type: 2
+      app:
+        m_AppId: 480
+      minutes: 15
+      achievment: {fileID: 0}
+    - type: 2
+      app:
+        m_AppId: 480
+      minutes: 15
+      achievment: {fileID: 0}
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 4
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 5
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 6
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 7
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 8
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 14
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 16
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 17
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 18
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 19
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 20
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 21
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 22
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 23
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 24
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 25
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 26
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 27
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 28
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 29
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []

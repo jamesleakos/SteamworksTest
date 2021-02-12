@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: b1f3ecb99c1c15b43bbeacc9eb71e921
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dataIcon: {fileID: 2800000, guid: 948715a56f2207b459ffcb3b84e01ca1, type: 3}
+  - dropBoxTexture: {fileID: 2800000, guid: 45f2cea549306e34e8509d7efaa76fe0, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

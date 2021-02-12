@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c5cf52da10cbc4fb971e8777a68135, type: 3}
+  m_Name: App Starting
+  m_EditorClassIdentifier: 
+  DeveloperDescription: Demonstration cursor
+  Animation:
+    loop: 1
+    textureArray:
+    - {fileID: 2800000, guid: 16867ce094e804546b69dbcd2376c28b, type: 3}
+    - {fileID: 2800000, guid: 2a23624fa0268e747b22ada7637aa851, type: 3}
+    - {fileID: 2800000, guid: 4827d7c797fa3f540a9520ce242e582a, type: 3}
+    - {fileID: 2800000, guid: c9188b6158f6b3447ae3e51d008d98cd, type: 3}
+    - {fileID: 2800000, guid: a6175915274e53340a5e4856f5a39367, type: 3}
+    - {fileID: 2800000, guid: e2d50149f19302e4680c2c530eda036f, type: 3}
+    - {fileID: 2800000, guid: 9e5f90d293ca7754ba2617cae555b6b0, type: 3}
+    - {fileID: 2800000, guid: 04913f25d78a43a44888adf2e2f6fa25, type: 3}
+    - {fileID: 2800000, guid: e2acfbb141ffce34b90df4f719d988ca, type: 3}
+    - {fileID: 2800000, guid: 5b3ba814fbee7b24dba832b1bcffc5ae, type: 3}
+    - {fileID: 2800000, guid: 87f77a4832376954d99558bfc58791df, type: 3}
+    - {fileID: 2800000, guid: 06314b5d9fa316542bf097815fbff47d, type: 3}
+    - {fileID: 2800000, guid: e9da81025703f7a429b197b9b1fd5f79, type: 3}
+    - {fileID: 2800000, guid: 57548c69809fd314eb1198944b356339, type: 3}
+    - {fileID: 2800000, guid: 1189b80112d74e846aa90ab8280fe7fa, type: 3}
+    - {fileID: 2800000, guid: 331a244e024671d4c81f657bc102ec6f, type: 3}
+    framesPerSecond: 30
+    offset: {x: 0, y: 0}

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4efb119f2b6df6b4fbcdb2e63cfa5974, type: 3}
+  m_Name: Heathen Command Parser
+  m_EditorClassIdentifier: 
+  UseCaseSinsativeCommandNames: 0
+  CommandStartString: /
+  DeveloperCommands: []
+  UserCommands:
+  - {fileID: 11400000, guid: b1c09524b2fa8e54caf9e75b42438c55, type: 2}
+  - {fileID: 11400000, guid: cfd0efbb4f2d3834b9b7390fb9277d80, type: 2}

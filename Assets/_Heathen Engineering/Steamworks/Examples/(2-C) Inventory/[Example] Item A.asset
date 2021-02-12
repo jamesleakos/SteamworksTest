@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095f1ccd555b42745b3c813312fad489, type: 3}
+  m_Name: '[Example] Item A'
+  m_EditorClassIdentifier: 
+  DeveloperDescription: "These notes only exist in the editor and are here \nfor the
+    designers/developers to leave notes"
+  DefinitionID:
+    m_SteamItemDef: 123456
+  Recipes:
+  - {fileID: 11400000, guid: b94d6d7eb88e7e240a38d7f64dcdb422, type: 2}
+  - {fileID: 11400000, guid: 38dde7e79118504438c971fc98d46c54, type: 2}
+  ValveItemDefAttributes:
+  - attribute: 0
+    language: 0
+    stringValue: Item A
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 1
+    language: 0
+    stringValue: An example of an item built within Heathen Engineering's Steamworks.
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 11
+    language: 0
+    stringValue: 
+    boolValue: 1
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 12
+    language: 0
+    stringValue: 
+    boolValue: 1
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 13
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue:
+    - category: Examples
+      tag: A
+    - category: Type
+      tag: Sample
+    tagGeneratorValue: []
+  - attribute: 15
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray:
+    - Examples
+    - Items
+    - Stuff
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 14
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue:
+    - category: Category
+      tag: Tag
+    tagGeneratorValue:
+    - {fileID: 11400000, guid: 6ca3725b875c53d4eaef6314efe0bdfa, type: 2}

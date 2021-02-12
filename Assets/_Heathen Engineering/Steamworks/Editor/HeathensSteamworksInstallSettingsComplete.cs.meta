@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: da4b91852d7725242829063eae340680
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - SteamworksInstall: {fileID: 102900000, guid: 81feb4ab2cc3cc64cbb906aff8971a26,
+      type: 3}
+  - HeathenSteamworksComplete: {fileID: 102900000, guid: 2cc8a2f210a57ce4291ead0107c7bf97,
+      type: 3}
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: 49ae55a4736bc014ea41071cb1aa4363, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,64 @@
+MAJOR UPDATE
+It is recomended that you remove any previous versions completly before installing this update. Note that some objects have had there names changed and various members have been depracated. Obsolete messages have been applied where appropreate to help you convert old code to the new system structure. The degree of change for systems such as Steam Game Manager however may require additional attention, for Steam Game Server in particular funcitonality has been moved to SteamSettings.server . If you have any questions please ask on the Discord server.
+Also of note is a major change to the Lobby System, previous versions assumed the management of a single lobby, the new system manages multiple lobbies. SteamLobbySettings.lobbies will contain a list of all connected lobbies. If your using a single lobby system you will find most of the fucnitionality you need on SteamLobbySettings.lobbies[0]
+
+Change Notes:
+- SteamworksLobbyMember has been updated with the following changes
+-- UserData name change to userData to conform to nameing standards
+-- this[string key] read and write access added for member metadata
+-- IsReady, GameVersion and DataIndex standard metadata fields now have accessors e.g. SteamworksLobbyMember.IsReady
+-- Metadata as a field on the object has been depricated, instead metadata can be accessed via string indexer e.g. myLobbyMember["myDataKey"] = "Hello World ... I just set a metadata field!";
+
+- LobbyChatMessage now tracks the lobby a message came from
+
+- SteamworksLobbySettings has been updated with the following changes
+-- Now handles mutliple lobbies using the new SteamLobby object. You can access the data of a specific lobby via the CSteamID indexer e.g. Debug.Log("This is the name of the lobby = " + lobbySettings[<lobbyId>].Name);
+-- SetLobbyId has been removed, the funcitonality of it is no longer used as the system now manages multiple lobbies
+-- Game Server Set event located on the lobby settings will now raise when any lobby has its game set. The provided param indicates the lobby that was set for. In addition each lobby object located in the SteamworksLobbySettings.lobbies also raises an event for its self specificly.
+-- Lobby Chat Update event located on the lobby settings will now raise when any lobby has a chat message. 
+-- Lobby Entered event located on the lobby settings will now raise when any lobby is joined.
+-- Lobby Created event located on the lobby settings will now raise when any lobby is created.
+-- Chat Message Recieved event located on the lobby setting will now raise when any chat message is recieved.
+-- Create Lobby workflow has changed signifigantly. the SteamworksLobbySettings.CreateLobby method now only takes the type of lobby and member count limit. All other data such as lobby name and additional metadata must be added to the lobby after its creation.
+-- Quick match no longer auto creates a lobby but does raise an event when the process fails to find a match, the intent is that the developer can handle the event perform the desired actions (create a lobby or not).
+-- Set Lobby Metadata and Set Member Metadata now assume you want to set data on the first lobby. Overloads have been provided to target a sepecific lobby by its ID and it is recomend that you use the SteamLobby object directly to set data.
+Index accessors are vailable on the lobby settings object for the lobbies and on the SteamLobby object for the metadata values for example lobbySetting[lobbyId][metadataKey] = metadataValue; this gets the SteamLobby object from lobbySettings that matches the lobbyId and then sets the metadata on that lobby whoes key matches metadataKey. To set member metadata you would use lobbySetting[lobbyId].User[metadataKey] = metadataValue;
+-- Utility methods such as KickMember, ChangeOwner, etc. have been updated to assume the first lobby in the lobbies list. An additional overload letting you specify the LobbyId of the lobby you wish to perform the command on is also provided. These methods are in place to help existing code work in as similar a manner as possible e.g. lobbySettings.KickMember(memberId) will simply assume the first lobby. It is however recomended that you leverage the new SteamLobby class ... the settings object will store each lobby you join as a SteamLobby object .. this object wraps all of Valve's lobby funcitonality e.g. SteamLobby.Owner is the owner of the lobby ... you can read that value or set it to update the owner as opposed to calling lobbySettings.ChangeOwner(newOwner);
+
+- New Heathen standard lobby and member data fields have been created and can be accessed directly on the SteamLobby object and SteamworksLobbyMember object respetivly, default fields include: name, version, ready and kick usage follows
+-- name: this is a standard field for giving a lobby a name such as to display lobbies in a browser window by its name.
+-- version: a string representing the specific build the lobby is using ... note that when a user become the owner they should update the value here to match the version of the game they are running ... this is of course an optional field
+-- ready: used as a ready check system, is converted to a booolean by SteamworksLobbyMember object and ready by the SteamLobby object to report AllUsersReady AllUsersNotReady
+-- kick: used by the system internally to have a user leave the lobby when there ID appears in the SteamLobby.metadata for this field
+-- both the SteamLobby and SteamworksLobbyMember objects have [string key] accessors making it easy to read and write metadata values ... e.g. steamlobby["myKey"] = "Hello World"; helper methods for fetchign an array of the KeyValue<string,string> are also vailable so you can iterate over the whole collection
+
+- Steam Voice system has recieved improvements for streaming audio and control over quality/rate
+
+- Steam Inventory system has recieved various bug fixes to correct typos and other issues with the generate JSON feature.
+
+- Added support for Rich Presence to the SteamUserData object. You can now fetch specific values by key or get a dictionary of all values set on a specific user
+
+- Steam Game Server
+  Complete overhaul, the Steam Game Server system has now been merged with Steam Settings and Steamworks Foundation Manager such that you no longer need a seperate configuration and componenet to drive a steam game server. instead your Steamworks Foundaiton Manager and its Steam Settings object will handle Steam Client for client builds and Steam Game Server for server builds where this is detected via Unity's UNITY_SERVER define. This change also reduces code bloat in that client only code will only compile on client builds (non-server builds) and server only code will only compile on server builds aka batch aka headless
+
+- Steam Settings Object
+-- Added support for setting Rich Presence values on the local user
+-- Added support for listing the local users friends or a sub group of users in the local users friends list such as blocked, pending, etc.
+-- Added support for Steam Clans, you can now fetch list of clans the user is a member of and view specifics about that data such as teh name of the clan. tags and chating members of that clan as well as open up the clan chat for that clan.
+-- Added support for Steam Groups
+-- Migrated Steam Game Server Settings to the Steam Settings Object
+-- Migrated client specific configuration and funcitons into SteamSettings.client
+-- Migrated server specific configuration and funcitons into SteamSettings.server
+
+- Steamworks Foundation Manager
+-- Migrated Steam Game Server Manager to the Steamworks Foundaiton Manager via the Steam Settings object
+-- Updated the componenet to compile conditionally for servers and clients ... that is when building for server different features and funcitons will be available 
+
+- Steamworks Remote Storage
+-- Changed name to Steamworks Remote Storage Manager to be more in line with system systems
+-- removed singleton hooks but made most funcitonality static e.g. SteamworksRemoteStorageManager.FileWrite(name, object, encoding);
+-- Added support for JSON serializaiton
+-- Imporved asynchronious support for reads and writes 
+-- Added support for callback model on async calls e.g.
+   SteamworksReamoteStorageManager.FileReadAsync("The File Name Goes Here").Complete = result => { Debug.Log(result.FromASCII()); };
+-- Updated SteamDataFile object to handle JSON objects and custom encoding options

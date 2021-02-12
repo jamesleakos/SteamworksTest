@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4b91852d7725242829063eae340680, type: 3}
+  m_Name: Heathen's Steamworks Complete Install Settings
+  m_EditorClassIdentifier: 
+  SteamworksInstall: {fileID: 102900000, guid: fa4adccc951b9554ba99f6ae61a757f8, type: 3}
+  HeathenSteamworksComplete: {fileID: 102900000, guid: 2cc8a2f210a57ce4291ead0107c7bf97,
+    type: 3}
+  SteamworksNetFound: 1
+  HeathenSteamworksFound: 1

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e058302e31ae347b3a6788331b4e33, type: 3}
+  m_Name: '[Example] Tag Generator Definition'
+  m_EditorClassIdentifier: 
+  DeveloperDescription: 'A tag generator is a special item that enables
+
+    selection of a tag by probability'
+  DefinitionID:
+    m_SteamItemDef: 0
+  TagName: quality
+  TagValues:
+  - name: common
+    weight: 100
+  - name: rare
+    weight: 10
+  - name: legendary
+    weight: 1

@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7449ba0ff99e3c64e9bd1ec4854965eb, type: 3}
+  m_Name: Example Lobby Settings
+  m_EditorClassIdentifier: 
+  MaxDistanceFilter: 3
+  LobbyName: 
+  MaxMemberCount:
+    Mode: 2
+    m_constantValue: 4
+    Variable: {fileID: 11400000, guid: 48201cb31cdcc12499832fee4f8c705c, type: 2}
+  MemberDataKeys:
+  - test_game_key
+  LobbyOwner:
+    UserData: {fileID: 0}
+    Metadata:
+      Records: []
+  Members: []
+  Metadata:
+    Records: []
+  LobbyDataUpdateFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnKickedFromLobby:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameLobbyJoinRequest:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLobbyMatchList:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLobbyCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnOwnershipChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMemberJoined:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMemberLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMemberDataChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLobbyEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLobbyExit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLobbyDataChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameServerSet:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLobbyChatUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  QuickMatchFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  SearchStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnChatMessageReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  ChatMemberStateChangeEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  ChatMemberStateChangeLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  ChatMemberStateChangeDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  ChatMemberStateChangeKicked:
+    m_PersistentCalls:
+      m_Calls: []
+  ChatMemberStateChangeBanned:
+    m_PersistentCalls:
+      m_Calls: []

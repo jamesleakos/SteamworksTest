@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b944379dcc40f74419939c706ca23330, type: 3}
+  m_Name: '[Example] Bundle'
+  m_EditorClassIdentifier: 
+  DeveloperDescription: 
+  DefinitionID:
+    m_SteamItemDef: 9876
+  Recipes: []
+  ValveItemDefAttributes:
+  - attribute: 0
+    language: 0
+    stringValue: Bundle of generators
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 1
+    language: 0
+    stringValue: 'The numbers to the left of the content item on a generator are the
+      number of items this bundle contains. In this case the bundle will resolve 3
+      items using the generator linked.
+
+
+      Note that if you expect to sale this bundle on the store it must have a price.
+      This price wont be used unless the ''Use Bundle Price'' attribute is provided
+      and set to true ... in this case it is not so we will use the automatically
+      calcualted discount rate. That rate will be 10% off the sum of the items included'
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 5
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values:
+      - currencyCode: EUR
+        value: 100
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 29
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 10
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 26
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  Content:
+  - Item: {fileID: 11400000, guid: 61e6a1c1495fae24db115315f5a553d2, type: 2}
+    Count: 3

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d49609734f78c40becab2d9ba18a24, type: 3}
+  m_Name: '[Example] Steamworks Inventory Settings'
+  m_EditorClassIdentifier: 
+  LogDebugMessages: 1
+  ItemDefinitions:
+  - {fileID: 11400000, guid: dc1f31cbb19b550428a5a1410bfc8615, type: 2}
+  - {fileID: 11400000, guid: 1f11b56ca0855ca4d810e8349756a4fe, type: 2}
+  - {fileID: 11400000, guid: fc1cfd44c2df35e4e96dd0c44169b004, type: 2}
+  - {fileID: 11400000, guid: f6c2731d1c0a51740a58f01a752f9e4e, type: 2}
+  ItemGenerators:
+  - {fileID: 11400000, guid: 61e6a1c1495fae24db115315f5a553d2, type: 2}
+  TagGenerators:
+  - {fileID: 11400000, guid: 6ca3725b875c53d4eaef6314efe0bdfa, type: 2}
+  ItemBundles:
+  - {fileID: 11400000, guid: 0dd2bf15ce5bd7e4090550581c250200, type: 2}
+  ItemInstancesUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  ItemsGranted:
+    m_PersistentCalls:
+      m_Calls: []
+  ItemsConsumed:
+    m_PersistentCalls:
+      m_Calls: []
+  ItemsExchanged:
+    m_PersistentCalls:
+      m_Calls: []
+  ItemsDroped:
+    m_PersistentCalls:
+      m_Calls: []

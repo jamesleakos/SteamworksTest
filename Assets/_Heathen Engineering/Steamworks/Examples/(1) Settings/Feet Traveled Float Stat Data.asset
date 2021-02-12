@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da81eb7de88c2c4197e3d17cb88b1bf, type: 3}
+  m_Name: Feet Traveled Float Stat Data
+  m_EditorClassIdentifier: 
+  statName: FeetTraveled
+  ValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: HeathenEngineering.SteamTools.UnityStatEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  Value: 0

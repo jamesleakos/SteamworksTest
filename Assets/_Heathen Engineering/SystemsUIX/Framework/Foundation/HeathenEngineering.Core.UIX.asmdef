@@ -1,0 +1,16 @@
+{
+    "name": "HeathenEngineering.Core.UIX",
+    "references": [
+        "HeathenEngineering.Core",
+        "HeathenEngineering.Core.Toolbox",
+        "Unity.TextMeshPro"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cd841f08814aa4ea5c3d33b387b222, type: 3}
+  m_Name: '[Example] Generator'
+  m_EditorClassIdentifier: 
+  DeveloperDescription: "These notes only exist in the editor and are here \nfor the
+    designers/developers to leave notes"
+  DefinitionID:
+    m_SteamItemDef: 654
+  Recipes:
+  - {fileID: 11400000, guid: b94d6d7eb88e7e240a38d7f64dcdb422, type: 2}
+  ValveItemDefAttributes:
+  - attribute: 0
+    language: 0
+    stringValue: Item Generator
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 1
+    language: 0
+    stringValue: "The values to the left of a generator are weights ... to find the
+      % chance an entry has to generate divide its weight by the sum total of all
+      weights.\n\nThis item generator has a \n50% chance to generate Item A .... 100
+      / (100 + 50 + 50 + 1)\n25% chance to generate Item B .... 50 / (100 + 50 + 50
+      + 1)\n25% chance to generate Item C .... 50 / (100 + 50 + 50 + 1)\n0.5% chance
+      to generate Item D .... 1 / (100 + 50 + 50 + 1)"
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 11
+    language: 0
+    stringValue: 
+    boolValue: 1
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 12
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values: []
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  - attribute: 5
+    language: 0
+    stringValue: 
+    boolValue: 0
+    colorValue: {r: 0, g: 0, b: 0, a: 0}
+    intValue: 0
+    stringArray: []
+    priceDataValue:
+      version: 1
+      values:
+      - currencyCode: EUR
+        value: 100
+    priceCategoryValue:
+      version: 1
+      price: 3
+    promoRulesValue: []
+    inventoryTagValue: []
+    tagGeneratorValue: []
+  Content:
+  - Item: {fileID: 11400000, guid: f6c2731d1c0a51740a58f01a752f9e4e, type: 2}
+    Count: 100
+  - Item: {fileID: 11400000, guid: dc1f31cbb19b550428a5a1410bfc8615, type: 2}
+    Count: 50
+  - Item: {fileID: 11400000, guid: 1f11b56ca0855ca4d810e8349756a4fe, type: 2}
+    Count: 50
+  - Item: {fileID: 11400000, guid: fc1cfd44c2df35e4e96dd0c44169b004, type: 2}
+    Count: 1
