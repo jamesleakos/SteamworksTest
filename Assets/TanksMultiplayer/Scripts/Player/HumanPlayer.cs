@@ -69,13 +69,13 @@ namespace Errantastra {
         const string block = "block";
         const string idle = "idle";
 
-        public float normalAttackLength;
-        public float longNormalAttackLength;
-        public float shieldAttackLength;
-        public float longShieldAttackLength;
-        public float throwingAnimLength;
-        public float attackPatienceBuffer = 0.1f;
-        public float endAttackTime;
+        private float normalAttackLength;
+        private float longNormalAttackLength;
+        private float shieldAttackLength;
+        private float longShieldAttackLength;
+        private float throwingAnimLength;
+        private float attackPatienceBuffer = 0.1f;
+        private float endAttackTime;
         
         public enum AnimationState
         {
@@ -114,6 +114,10 @@ namespace Errantastra {
         #region Throwing Spear
 
         public Transform hand;
+
+        public GameObject networkedSpearPrefab;
+        private GameObject networkedSpearClone;
+
         public GameObject spearPrefab;
         private GameObject spearClone;
 
@@ -224,7 +228,9 @@ namespace Errantastra {
 
         protected override void Start()
         {
-            Debug.Log("Start");
+            networkManager = GameObject.FindObjectOfType<HeathenCustomNetworkManager>();
+            networkedSpearPrefab = networkManager.spawnPrefabs.Find(x => x.name == "NetworkedSpear");
+
             CmdSpearStart();
         }
 
@@ -347,7 +353,6 @@ namespace Errantastra {
             {
                 if (movementState == MovementState.blocking)
                 {
-                    Debug.Log("Blocking attack");
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
                         endAttackTime = Time.time + longShieldAttackLength;
@@ -509,8 +514,8 @@ namespace Errantastra {
         #region Dealing with Attack Outcomes
 
         // hit player with melee weapon (held or thrown, somewhat confusingly)
-        [Server]
-        public void HitPlayerWithHandWeapon(HumanPlayer hitPlayer)
+        [Command]
+        public void CmdHitPlayerWithHandWeapon(HumanPlayer hitPlayer)
         {
             if (hitPlayer.movementState == MovementState.blocking)
             {
@@ -808,60 +813,60 @@ namespace Errantastra {
         [Command]
         private void CmdSpearStart()
         {
-            Debug.Log("CmdSpearStart");
-            networkManager = GameObject.FindObjectOfType<HeathenCustomNetworkManager>();
-            spearPrefab = networkManager.spawnPrefabs.Find(x => x.name == "Spear");
-            Debug.Log("spear prefab = " + spearPrefab);
             LoadSpear();
+            RpcLoadSpear();
         }
 
-        [ServerCallback]
+        [ClientRpc]
+        private void RpcLoadSpear()
+        {
+            LoadSpear();
+        }
+        
         private void LoadSpear()
         {
             foreach (Transform spear in hand)
             {
-                NetworkServer.Destroy(spear.gameObject);
+                Destroy(spear.gameObject);
             }
             spearClone = Instantiate(spearPrefab);
             spearClone.GetComponent<Spear>().spearState = Spear.SpearState.held;
             spearClone.transform.SetParent(hand);
             spearClone.transform.localPosition = new Vector3(0, 0, 0);
             spearClone.transform.localRotation = new Quaternion(0, 0, 0,0);
-            NetworkServer.Spawn(spearClone);
-        }
-
-        private void StartThrowingSpear()
-        {
-            //PlayArrowReleaseSound();
-
-            //faceDirX = ((gameObject.transform.position.x - Camera.main.ScreenToWorldPoint(Input.mousePosition).x) <= 0) ? 1 : -1;
-            //arrowClone.gameObject.transform.parent = null;
-            //arrowClone.FireArrow();
-            //arrowClone = null;
         }
 
         [Command]
         public void CmdReleaseSpear()
         {
-            spearClone.gameObject.transform.parent = null;
-            Spear spear = spearClone.GetComponent<Spear>();
-            spear.spearState = Spear.SpearState.flying;
+            foreach (Transform s in hand)
+            {
+                Destroy(s.gameObject);
+            }
+            networkedSpearClone = Instantiate(networkedSpearPrefab);
+            networkedSpearClone.transform.position = hand.position;
+            networkedSpearClone.transform.rotation = hand.rotation;
+            NetworkServer.Spawn(networkedSpearClone);
+
+            NetworkedSpear spear = networkedSpearClone.GetComponent<NetworkedSpear>();
+            spear.spearState = NetworkedSpear.SpearState.flying;
             spear.StartFlying();
-            spearClone = null;
+            networkedSpearClone = null;
 
             RpcReleaseSpear();
 
             LoadSpear();
+            RpcLoadSpear();
         }
 
         [ClientRpc]
         public void RpcReleaseSpear()
         {
-            //spearClone.gameObject.transform.parent = null;
-            //Spear spear = spearClone.GetComponent<Spear>();
-            //spear.spearState = Spear.SpearState.flying;
-            //spear.StartFlying();
-            //spearClone = null;
+            foreach (Transform spear in hand)
+            {
+                Destroy(spear.gameObject);
+            }
+            spearClone = null;
         }
 
         #endregion

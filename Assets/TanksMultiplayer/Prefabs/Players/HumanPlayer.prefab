@@ -29,10 +29,10 @@ MonoBehaviour:
   killedBy: {fileID: 0}
   blockSpeed: 2
   walkSpeed: 4
-  runSpeed: 6
-  rollSpeed: 8
-  rollTime: 0.2
-  rollCoolDownTime: 0.2
+  runSpeed: 7
+  rollSpeed: 40
+  rollTime: 0.08
+  rollCoolDownTime: 1
   movementState: 0
   attackingState: 0
   takingAction: 0
@@ -43,17 +43,12 @@ MonoBehaviour:
   myName: 
   teamIndex: 0
   animator: {fileID: 7271643152800728660}
-  normalAttackLength: 0
-  longNormalAttackLength: 0
-  shieldAttackLength: 0
-  longShieldAttackLength: 0
-  throwingAnimLength: 0
-  attackPatienceBuffer: 0.1
-  endAttackTime: 0
   animationState: 0
   shield: 0
   hand: {fileID: 2353204949964196503}
-  spearPrefab: {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e,
+  networkedSpearPrefab: {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e,
+    type: 3}
+  spearPrefab: {fileID: 8867412204619696729, guid: 08d24568fb03693468f1bdeece7e1c9a,
     type: 3}
 --- !u!1001 &755564415462274229
 PrefabInstance:

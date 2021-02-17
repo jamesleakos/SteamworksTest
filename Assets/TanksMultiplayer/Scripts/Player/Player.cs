@@ -53,12 +53,12 @@ namespace Errantastra
         public float blockSpeed = 5;
         public float walkSpeed = 12;
         public float runSpeed = 25;
-        public float rollSpeed = 50;
+        public float rollSpeed = 175;
 
-        public float rollTime = 0.5f;
+        public float rollTime = 0.10f;
         protected float endRollTime;
 
-        public float rollCoolDownTime = 0.3f;
+        public float rollCoolDownTime = 0.5f;
         protected float endRollCoolDownTime;
         protected bool waitingToRoll;
 
