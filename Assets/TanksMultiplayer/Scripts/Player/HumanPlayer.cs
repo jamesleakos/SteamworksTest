@@ -224,10 +224,7 @@ namespace Errantastra {
 
         protected override void Start()
         {
-            if (isServer)
-            {
-                SpearStart();
-            }
+            CmdSpearStart();
         }
 
         protected override void Update()
@@ -807,8 +804,8 @@ namespace Errantastra {
 
         #region Throwing Spear
 
-        [ServerCallback]
-        private void SpearStart()
+        [Command]
+        private void CmdSpearStart()
         {
             networkManager = GameObject.FindObjectOfType<HeathenCustomNetworkManager>();
             spearPrefab = networkManager.spawnPrefabs.Find(x => x.name == "Spear");
