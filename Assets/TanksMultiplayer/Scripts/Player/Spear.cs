@@ -9,7 +9,6 @@ namespace Errantastra
 {
     public class Spear : MonoBehaviour
     {
-        [HideInInspector]
         public HumanPlayer myPlayer;
 
         /// <summary>
@@ -35,11 +34,6 @@ namespace Errantastra
         protected void Awake()
         {
             myCollider = GetComponent<BoxCollider2D>();
-        }
-
-        protected void Start()
-        {
-            myPlayer = gameObject.GetComponentInParent<HumanPlayer>();
         }
 
         [ServerCallback]
