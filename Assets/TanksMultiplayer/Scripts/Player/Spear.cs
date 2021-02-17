@@ -9,7 +9,8 @@ namespace Errantastra
 {
     public class Spear : MonoBehaviour
     {
-        private HumanPlayer myPlayer;
+        [HideInInspector]
+        public HumanPlayer myPlayer;
 
         /// <summary>
         /// Clip to play when a player gets hit.

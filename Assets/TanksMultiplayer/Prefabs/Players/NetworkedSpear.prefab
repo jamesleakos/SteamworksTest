@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 8968516386049699323}
   - component: {fileID: 7642807157929523999}
   - component: {fileID: 7168826158688893386}
+  - component: {fileID: -5144774148330265683}
   m_Layer: 0
   m_Name: NetworkedSpear
   m_TagString: Untagged
@@ -270,4 +271,21 @@ MonoBehaviour:
   back: {fileID: 1137510423308840309}
   maxFlightTime: 1
   owner: {fileID: 0}
+  spearState: 0
+--- !u!114 &-5144774148330265683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6932907294134571758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3ba2bfe599db0a4793f79ba44da4c39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPlayer: {fileID: 0}
+  hitClip: {fileID: 0}
+  tip: {fileID: 3484370295075217496}
+  back: {fileID: 1137510423308840309}
   spearState: 0

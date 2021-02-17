@@ -693,7 +693,7 @@ namespace Errantastra {
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            EnterAnimationState(AnimationState.longShieldAttack);
+            //EnterAnimationState(AnimationState.longShieldAttack);
             attackingState = AttackingState.longShieldAttack;
         }
 
@@ -712,7 +712,7 @@ namespace Errantastra {
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            EnterAnimationState(AnimationState.shieldAttack);
+            //EnterAnimationState(AnimationState.shieldAttack);
             attackingState = AttackingState.shieldAttack;
         }
 
@@ -731,7 +731,7 @@ namespace Errantastra {
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            EnterAnimationState(AnimationState.longNormalAttack);
+            //EnterAnimationState(AnimationState.longNormalAttack);
             attackingState = AttackingState.longNormalAttack;
         }
 
@@ -750,7 +750,7 @@ namespace Errantastra {
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            EnterAnimationState(AnimationState.normalAttack);
+            //EnterAnimationState(AnimationState.normalAttack);
             attackingState = AttackingState.normalAttack;
         }
 
@@ -769,7 +769,7 @@ namespace Errantastra {
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            EnterAnimationState(AnimationState.throwingSpear);
+            //EnterAnimationState(AnimationState.throwingSpear);
             attackingState = AttackingState.throwingSpear;
         }
 
@@ -834,6 +834,8 @@ namespace Errantastra {
             spearClone.transform.SetParent(hand);
             spearClone.transform.localPosition = new Vector3(0, 0, 0);
             spearClone.transform.localRotation = new Quaternion(0, 0, 0,0);
+
+            spearClone.GetComponent<Spear>().myPlayer = this;
         }
 
         [Command]
@@ -851,6 +853,7 @@ namespace Errantastra {
             NetworkedSpear spear = networkedSpearClone.GetComponent<NetworkedSpear>();
             spear.spearState = NetworkedSpear.SpearState.flying;
             spear.StartFlying();
+            networkedSpearClone.GetComponent<Spear>().myPlayer = this;
             networkedSpearClone = null;
 
             RpcReleaseSpear();
