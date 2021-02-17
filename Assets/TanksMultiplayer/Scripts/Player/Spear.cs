@@ -42,6 +42,7 @@ namespace Errantastra
             myPlayer = gameObject.GetComponentInParent<HumanPlayer>();
         }
 
+        [ServerCallback]
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.tag == "Player")

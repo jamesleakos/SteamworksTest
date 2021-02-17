@@ -113,6 +113,10 @@ namespace Errantastra {
 
         #region Throwing Spear
 
+        [HideInInspector]
+        [SyncVar]
+        public bool holdingSpear;
+
         public Transform hand;
 
         public GameObject networkedSpearPrefab;
@@ -224,6 +228,11 @@ namespace Errantastra {
             mainCamera.GetComponent<FollowTarget>().target = gameObject.transform;
 
             UpdateAnimClipTimes();
+
+            foreach (var hp in Object.FindObjectsOfType<HumanPlayer>())
+            {
+                if (hp.holdingSpear) hp.LoadSpear();
+            }
         }
 
         protected override void Start()
@@ -823,8 +832,9 @@ namespace Errantastra {
             LoadSpear();
         }
         
-        private void LoadSpear()
+        public void LoadSpear()
         {
+            holdingSpear = true;
             foreach (Transform spear in hand)
             {
                 Destroy(spear.gameObject);
@@ -841,6 +851,7 @@ namespace Errantastra {
         [Command]
         public void CmdReleaseSpear()
         {
+            holdingSpear = false;
             foreach (Transform s in hand)
             {
                 Destroy(s.gameObject);
@@ -848,12 +859,14 @@ namespace Errantastra {
             networkedSpearClone = Instantiate(networkedSpearPrefab);
             networkedSpearClone.transform.position = hand.position;
             networkedSpearClone.transform.rotation = hand.rotation;
+            networkedSpearClone.GetComponent<NetworkedSpear>().spearState = NetworkedSpear.SpearState.flying;
+            networkedSpearClone.GetComponent<NetworkedSpear>().StartFlying();
+            networkedSpearClone.GetComponent<Spear>().myPlayer = this;
+
             NetworkServer.Spawn(networkedSpearClone);
 
-            NetworkedSpear spear = networkedSpearClone.GetComponent<NetworkedSpear>();
-            spear.spearState = NetworkedSpear.SpearState.flying;
-            spear.StartFlying();
-            networkedSpearClone.GetComponent<Spear>().myPlayer = this;
+            Debug.Log("Networked spear clone.player = " + networkedSpearClone.GetComponent<Spear>().myPlayer);
+            
             networkedSpearClone = null;
 
             RpcReleaseSpear();
