@@ -224,6 +224,7 @@ namespace Errantastra {
 
         protected override void Start()
         {
+            Debug.Log("Start");
             CmdSpearStart();
         }
 
@@ -807,8 +808,10 @@ namespace Errantastra {
         [Command]
         private void CmdSpearStart()
         {
+            Debug.Log("CmdSpearStart");
             networkManager = GameObject.FindObjectOfType<HeathenCustomNetworkManager>();
             spearPrefab = networkManager.spawnPrefabs.Find(x => x.name == "Spear");
+            Debug.Log("spear prefab = " + spearPrefab);
             LoadSpear();
         }
 
@@ -911,6 +914,12 @@ namespace Errantastra {
                 if (movementState == MovementState.blocking) SetOrKeepState(AnimationState.block);
                 else SetOrKeepState(AnimationState.idle);
             }
+        }
+
+        [Command]
+        public void CmdEndAttack ()
+        {
+            EndAttack();
         }
         [Server]
         public void EndAttack ()
