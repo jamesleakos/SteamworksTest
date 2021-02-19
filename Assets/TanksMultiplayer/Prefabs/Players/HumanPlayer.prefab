@@ -16,13 +16,7 @@ MonoBehaviour:
   syncInterval: 0.1
   collisionMask:
     serializedVersion: 2
-    m_Bits: 0
-  horizontalRayCount: 4
-  verticalRayCount: 4
-  horizontalRaySpacing: 0
-  verticalRaySpacing: 0
-  collider_jl: {fileID: 0}
-  playerInput: {x: 0, y: 0}
+    m_Bits: 512
   bodyAndWeapons: {fileID: 8044612609080278996}
   bodyAndWeaponsRotation: {x: 0, y: 0, z: 0, w: 0}
   remoteRotationSpeed: 30
@@ -45,6 +39,7 @@ MonoBehaviour:
   animator: {fileID: 7271643152800728660}
   animationState: 0
   shield: 0
+  holdingSpear: 0
   hand: {fileID: 2353204949964196503}
   networkedSpearPrefab: {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e,
     type: 3}
@@ -148,7 +143,7 @@ PrefabInstance:
     - target: {fileID: 2564065470847468780, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
       propertyPath: clientAuthority
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3086107836862922274, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}

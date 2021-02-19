@@ -77,47 +77,9 @@ namespace Errantastra
             }
             if (spearState == SpearState.flying && isServer)
             {
-                RaycastCollisionDetection();
+                Debug.Log("Got to move");
                 Move(velocity * Time.deltaTime);
             }
-        }
-
-        [ServerCallback]
-        void RaycastCollisionDetection()
-        {
-            float rayLength = Mathf.Abs(velocity.x * Time.deltaTime);
-            Vector2 rayOrigin = tip.position;
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, tip.position - back.position, rayLength, collisionMask);
-
-            Debug.DrawRay(rayOrigin, (tip.position - back.position).normalized * rayLength, Color.red);
-
-            if (hit)
-            {
-                if (gameObject.transform.lossyScale.x < 0)
-                {
-                    velocity.x = -1 * hit.distance / Time.deltaTime;
-                }
-                else
-                {
-                    velocity.x = hit.distance / Time.deltaTime;
-                }
-                velocity.y = 0;
-            }
-        }
-
-        public void Move(Vector3 velocity)
-        {
-            velocity = Vector3.right * moveSpeed;
-            UpdateRaycastOrigins();
-            collisions.Reset();
-            collisions.velocityOld = velocity;
-
-            if (velocity.x != 0)
-            {
-                collisions.faceDir = (int)Mathf.Sign(velocity.x);
-            }
-
-            transform.Translate(velocity * Time.deltaTime);
         }
 
         [ServerCallback]
@@ -149,6 +111,7 @@ namespace Errantastra
 
         public void StartFlying()
         {
+            velocity = moveSpeed * Vector2.right;
             endFlightTime = Time.time + maxFlightTime;
         }
 

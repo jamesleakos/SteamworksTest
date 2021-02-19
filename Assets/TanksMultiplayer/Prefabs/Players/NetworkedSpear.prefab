@@ -255,13 +255,7 @@ MonoBehaviour:
   syncInterval: 0.1
   collisionMask:
     serializedVersion: 2
-    m_Bits: 0
-  horizontalRayCount: 4
-  verticalRayCount: 4
-  horizontalRaySpacing: 0
-  verticalRaySpacing: 0
-  collider_jl: {fileID: 0}
-  playerInput: {x: 0, y: 0}
+    m_Bits: 512
   moveSpeed: 20
   velocity: {x: 0, y: 0, z: 0}
   despawnDelay: 1

@@ -8,21 +8,20 @@ namespace Errantastra
     [RequireComponent(typeof(BoxCollider2D))]
     public class RaycastController : NetworkBehaviour
     {
-
         public LayerMask collisionMask;
 
-        public const float skinWidth = .015f;
-        public int horizontalRayCount = 4;
-        public int verticalRayCount = 4;
+        protected const float skinWidth = .015f;
+        protected int horizontalRayCount = 4;
+        protected int verticalRayCount = 4;
 
         [HideInInspector]
-        public float horizontalRaySpacing;
+        protected float horizontalRaySpacing;
         [HideInInspector]
-        public float verticalRaySpacing;
+        protected float verticalRaySpacing;
 
         [HideInInspector]
-        public BoxCollider2D collider_jl;
-        public RaycastOrigins raycastOrigins;
+        protected BoxCollider2D collider_jl;
+        protected RaycastOrigins raycastOrigins;
 
         protected virtual void Awake()
         {

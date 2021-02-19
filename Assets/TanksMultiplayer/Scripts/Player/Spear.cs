@@ -9,6 +9,7 @@ namespace Errantastra
 {
     public class Spear : MonoBehaviour
     {
+        [HideInInspector]
         public HumanPlayer myPlayer;
 
         /// <summary>

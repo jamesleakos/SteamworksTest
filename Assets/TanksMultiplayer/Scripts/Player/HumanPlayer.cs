@@ -10,8 +10,6 @@ using HeathenEngineering.SteamApi.Foundation;
 using HeathenEngineering.SteamApi.Foundation.UI;
 using UnityEngine.Serialization;
 
-
-
 namespace Errantastra {
 
     public class HumanPlayer : Player
@@ -259,7 +257,6 @@ namespace Errantastra {
             DetermineAttackingAndRollingInputs();
             MoveCharacter();
 
-
             if (Time.time > endAttackTime)
             {
                 CmdEndAction();
@@ -339,7 +336,7 @@ namespace Errantastra {
                 else
                 {
                     endAttackTime = Time.time + throwingAnimLength;
-                    CmdThrowSpear(MousePosition());
+                    ClientThrowSpear(MousePosition());
                     return;
                 }
             }
@@ -365,12 +362,12 @@ namespace Errantastra {
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
                         endAttackTime = Time.time + longShieldAttackLength;
-                        CmdLongShieldAttack(MousePosition());
+                        ClientLongShieldAttack(MousePosition());
                     }
                     else
                     {
                         endAttackTime = Time.time + shieldAttackLength;
-                        CmdShieldAttack(MousePosition());
+                        ClientShieldAttack(MousePosition());
                     }
                 }
                 else
@@ -378,12 +375,12 @@ namespace Errantastra {
                     if (movementState == MovementState.running)
                     {
                         endAttackTime = Time.time + longNormalAttackLength;
-                        CmdLongNormalAttack(MousePosition());
+                        ClientLongNormalAttack(MousePosition());
                     }
                     else
                     {
                         endAttackTime = Time.time + normalAttackLength;
-                        CmdNormalAttack(MousePosition());
+                        ClientNormalAttack(MousePosition());
                     }
                 }
 
@@ -425,7 +422,7 @@ namespace Errantastra {
             }
 
             Vector2 velocity = playerInput * (movementSpeed);
-            gameObject.transform.Translate(velocity * Time.deltaTime);
+            Move(velocity * Time.deltaTime);
         }
 
         #endregion
@@ -691,95 +688,90 @@ namespace Errantastra {
         private void CmdLongShieldAttack(Vector3 mousePos)
         {
             takingAction = true;
-            EnterAnimationState(AnimationState.longShieldAttack);
             attackingState = AttackingState.longShieldAttack;
             RotateToPosition(mousePos);
-
-            RpcLongShieldAttack(mousePos);
         }
-        [ClientRpc]
-        private void RpcLongShieldAttack(Vector3 mousePos)
+        [ClientCallback]
+        private void ClientLongShieldAttack(Vector3 mousePos)
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            //EnterAnimationState(AnimationState.longShieldAttack);
+            EnterAnimationState(AnimationState.longShieldAttack);
             attackingState = AttackingState.longShieldAttack;
+
+            CmdLongShieldAttack(mousePos);
         }
 
         [Command]
         private void CmdShieldAttack(Vector3 mousePos)
         {
             takingAction = true;
-            EnterAnimationState(AnimationState.shieldAttack);
             attackingState = AttackingState.shieldAttack;
             RotateToPosition(mousePos);
-
-            RpcShieldAttack(mousePos);
         }
-        [ClientRpc]
-        private void RpcShieldAttack(Vector3 mousePos)
+        [ClientCallback]
+        private void ClientShieldAttack(Vector3 mousePos)
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            //EnterAnimationState(AnimationState.shieldAttack);
+            EnterAnimationState(AnimationState.shieldAttack);
             attackingState = AttackingState.shieldAttack;
+
+            CmdShieldAttack(mousePos);
         }
 
         [Command]
         private void CmdLongNormalAttack(Vector3 mousePos)
         {
             takingAction = true;
-            EnterAnimationState(AnimationState.longNormalAttack);
             attackingState = AttackingState.longNormalAttack;
             RotateToPosition(mousePos);
-
-            RpcLongNormalAttack(mousePos);
         }
-        [ClientRpc]
-        private void RpcLongNormalAttack(Vector3 mousePos)
+        [ClientCallback]
+        private void ClientLongNormalAttack(Vector3 mousePos)
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            //EnterAnimationState(AnimationState.longNormalAttack);
+            EnterAnimationState(AnimationState.longNormalAttack);
             attackingState = AttackingState.longNormalAttack;
+
+            CmdLongNormalAttack(mousePos);
         }
 
         [Command]
         private void CmdNormalAttack(Vector3 mousePos)
         {
             takingAction = true;
-            EnterAnimationState(AnimationState.normalAttack);
             attackingState = AttackingState.normalAttack;
             RotateToPosition(mousePos);
-
-            RpcNormalAttack(mousePos);
         }
-        [ClientRpc]
-        private void RpcNormalAttack(Vector3 mousePos)
+        [ClientCallback]
+        private void ClientNormalAttack(Vector3 mousePos)
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            //EnterAnimationState(AnimationState.normalAttack);
+            EnterAnimationState(AnimationState.normalAttack);
             attackingState = AttackingState.normalAttack;
+
+            CmdNormalAttack(mousePos);
         }
 
         [Command]
         private void CmdThrowSpear(Vector3 mousePos)
         {
             takingAction = true;
-            EnterAnimationState(AnimationState.throwingSpear);
             attackingState = AttackingState.throwingSpear;
             RotateToPosition(mousePos);
-
-            RpcThrowSpear(mousePos);
         }
-        [ClientRpc]
-        private void RpcThrowSpear(Vector3 mousePos)
+        [ClientCallback]
+        private void ClientThrowSpear(Vector3 mousePos)
         {
             takingAction = true;
             RotateToPosition(mousePos);
-            //EnterAnimationState(AnimationState.throwingSpear);
+            EnterAnimationState(AnimationState.throwingSpear);
             attackingState = AttackingState.throwingSpear;
+
+            CmdThrowSpear(mousePos);
         }
 
         #endregion
