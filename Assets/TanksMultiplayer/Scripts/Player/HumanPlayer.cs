@@ -256,11 +256,6 @@ namespace Errantastra {
             DetermineMovementInputs();
             DetermineAttackingAndRollingInputs();
             MoveCharacter();
-
-            if (Time.time > endAttackTime)
-            {
-                CmdEndAction();
-            }
         }
 
         protected void LateUpdate()
@@ -929,15 +924,9 @@ namespace Errantastra {
             }
         }
 
-        [Command]
-        public void CmdEndAttack ()
-        {
-            EndAttack();
-        }
-        [Server]
         public void EndAttack ()
         {
-            if(!Input.GetKey(KeyCode.Mouse1)) RotateToMouse();
+            if(!Input.GetKey(KeyCode.Mouse1) && isLocalPlayer) RotateToMouse();
             attackingState = AttackingState.notAttacking;
             takingAction = false;
         }
