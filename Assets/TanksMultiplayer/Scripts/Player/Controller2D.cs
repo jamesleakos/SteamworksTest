@@ -19,7 +19,6 @@ namespace Errantastra
 
         public void Move(Vector3 velocity)
         {
-            Debug.Log("enter velocity");
             UpdateRaycastOrigins();
             collisions.Reset();
             collisions.velocityOld = velocity;

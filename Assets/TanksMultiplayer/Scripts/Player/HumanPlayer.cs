@@ -515,14 +515,13 @@ namespace Errantastra {
         #region Dealing with Attack Outcomes
 
         // hit player with melee weapon (held or thrown, somewhat confusingly)
-        [Command]
-        public void CmdHitPlayerWithHandWeapon(HumanPlayer hitPlayer)
+        public void HitPlayerWithHandWeapon(HumanPlayer hitPlayer)
         {
+            if (!isServer) return;
             if (hitPlayer.movementState == MovementState.blocking)
             {
                 if (IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position,45.0f))
                 {
-                    Debug.Log("Attack blocked");
                     return;
                 }
             }

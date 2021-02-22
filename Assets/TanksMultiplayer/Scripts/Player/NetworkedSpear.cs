@@ -77,7 +77,6 @@ namespace Errantastra
             }
             if (spearState == SpearState.flying && isServer)
             {
-                Debug.Log("Got to move");
                 Move(velocity * Time.deltaTime);
             }
         }
