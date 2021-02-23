@@ -84,13 +84,6 @@ namespace Errantastra
         [ServerCallback]
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (spearState == SpearState.flying)
-            {
-                spearState = SpearState.stuck;
-                velocity.x = 0;
-                velocity.y = 0;
-            }
-
             StopFlying();
         }
 
@@ -118,8 +111,16 @@ namespace Errantastra
 
         private void StopFlying()
         {
-            PoolManager.Despawn(gameObject, despawnDelay);
-            // stop moving
+            if (spearState == SpearState.flying)
+            {
+                spearState = SpearState.stuck;
+                velocity.x = 0;
+                velocity.y = 0;
+            }
+
+            gameObject.GetComponent<Weapon>().movementState = Weapon.MovementState.stuck;
+
+            NetworkManager.Destroy(gameObject, despawnDelay);
         }
 
         //set despawn effects and reset variables

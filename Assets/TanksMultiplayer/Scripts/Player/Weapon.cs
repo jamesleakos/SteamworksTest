@@ -46,7 +46,7 @@ namespace Errantastra
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.tag == "Player")
+            if (collision.tag == "Player" && movementState != MovementState.stuck)
             {
                 HumanPlayer hitPlayer = collision.gameObject.GetComponent<HumanPlayer>();
                 if (hitPlayer == myPlayer) return;
