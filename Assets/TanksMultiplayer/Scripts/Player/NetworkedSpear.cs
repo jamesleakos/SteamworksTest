@@ -90,6 +90,8 @@ namespace Errantastra
                 velocity.x = 0;
                 velocity.y = 0;
             }
+
+            StopFlying();
         }
 
         //set initial travelling velocity

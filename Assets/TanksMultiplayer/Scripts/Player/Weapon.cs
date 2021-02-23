@@ -7,7 +7,7 @@ using Mirror;
 
 namespace Errantastra
 {
-    public class Spear : MonoBehaviour
+    public class Weapon : MonoBehaviour
     {
         [HideInInspector]
         public HumanPlayer myPlayer;
@@ -23,13 +23,20 @@ namespace Errantastra
         public Transform tip;
         public Transform back;
 
-        public enum SpearState
+        public enum WeaponType
+        {
+            spear,
+            shield
+        }
+        public WeaponType weaponType;
+
+        public enum MovementState
         {
             held,
             flying,
             stuck
         }
-        public SpearState spearState;
+        public MovementState movementState;
 
         //get component references
         protected void Awake()
@@ -43,7 +50,7 @@ namespace Errantastra
             {
                 HumanPlayer hitPlayer = collision.gameObject.GetComponent<HumanPlayer>();
                 if (hitPlayer == myPlayer) return;
-                myPlayer.HitPlayerWithHandWeapon(hitPlayer);
+                myPlayer.HitPlayerWithHandWeapon(hitPlayer, this);
             }
         }
     }

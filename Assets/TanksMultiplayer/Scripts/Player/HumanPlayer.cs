@@ -493,18 +493,12 @@ namespace Errantastra {
         {
             Vector3 direction = targetPos - looker.position;
             float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            float lookerAngle = looker.eulerAngles.z;
+            float lookerAngle = looker.Find("BodyAndWeapons").eulerAngles.z;
             float checkAngle = 0f;
 
-            if (ang >= 0f)
-                checkAngle = ang - lookerAngle - 90f;
-            else if (ang < 0f)
-                checkAngle = ang - lookerAngle + 270f;
-
-            if (checkAngle < -180f)
-                checkAngle = checkAngle + 360f;
-
-            if (checkAngle <= FOVAngle * .5f && checkAngle >= -FOVAngle * .5f)
+            // new test
+            checkAngle = ang - lookerAngle;
+            if (Mathf.Abs(checkAngle) < FOVAngle / 2)
                 return true;
             else
                 return false;
@@ -515,17 +509,16 @@ namespace Errantastra {
         #region Dealing with Attack Outcomes
 
         // hit player with melee weapon (held or thrown, somewhat confusingly)
-        public void HitPlayerWithHandWeapon(HumanPlayer hitPlayer)
+        public void HitPlayerWithHandWeapon(HumanPlayer hitPlayer, Weapon spear)
         {
             if (!isServer) return;
-            if (hitPlayer.movementState == MovementState.blocking)
+            if (hitPlayer.movementState == MovementState.blocking && spear.movementState != Weapon.MovementState.flying)
             {
                 if (IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position,45.0f))
                 {
                     return;
                 }
             }
-
             // kill player
             hitPlayer.GetKilled(this);
         }
@@ -826,12 +819,13 @@ namespace Errantastra {
                 Destroy(spear.gameObject);
             }
             spearClone = Instantiate(spearPrefab);
-            spearClone.GetComponent<Spear>().spearState = Spear.SpearState.held;
+            spearClone.GetComponent<Weapon>().movementState = Weapon.MovementState.held;
+            spearClone.GetComponent<Weapon>().weaponType = Weapon.WeaponType.spear;
             spearClone.transform.SetParent(hand);
             spearClone.transform.localPosition = new Vector3(0, 0, 0);
             spearClone.transform.localRotation = new Quaternion(0, 0, 0,0);
 
-            spearClone.GetComponent<Spear>().myPlayer = this;
+            spearClone.GetComponent<Weapon>().myPlayer = this;
         }
 
         [Command]
@@ -845,13 +839,15 @@ namespace Errantastra {
             networkedSpearClone = Instantiate(networkedSpearPrefab);
             networkedSpearClone.transform.position = hand.position;
             networkedSpearClone.transform.rotation = hand.rotation;
+            networkedSpearClone.GetComponent<Weapon>().myPlayer = this;
+            networkedSpearClone.GetComponent<Weapon>().movementState = Weapon.MovementState.flying;
+            spearClone.GetComponent<Weapon>().weaponType = Weapon.WeaponType.spear;
             networkedSpearClone.GetComponent<NetworkedSpear>().spearState = NetworkedSpear.SpearState.flying;
             networkedSpearClone.GetComponent<NetworkedSpear>().StartFlying();
-            networkedSpearClone.GetComponent<Spear>().myPlayer = this;
 
             NetworkServer.Spawn(networkedSpearClone);
 
-            Debug.Log("Networked spear clone.player = " + networkedSpearClone.GetComponent<Spear>().myPlayer);
+            Debug.Log("Networked spear clone.player = " + networkedSpearClone.GetComponent<Weapon>().myPlayer);
             
             networkedSpearClone = null;
 
