@@ -493,11 +493,14 @@ namespace Errantastra {
         {
             Vector3 direction = targetPos - looker.position;
             float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Debug.Log("ang = " + ang.ToString());
             float lookerAngle = looker.Find("BodyAndWeapons").eulerAngles.z;
+            Debug.Log("lookerAngle = " + lookerAngle.ToString());
             float checkAngle = 0f;
 
             // new test
             checkAngle = ang - lookerAngle;
+            Debug.Log("checkAngle = " + checkAngle.ToString());
             if (Mathf.Abs(checkAngle) < FOVAngle)
                 return true;
             else
