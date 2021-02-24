@@ -45,6 +45,50 @@ MonoBehaviour:
     type: 3}
   spearPrefab: {fileID: 8867412204619696729, guid: 08d24568fb03693468f1bdeece7e1c9a,
     type: 3}
+--- !u!61 &4128753635117000395
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007299955148453}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.06}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.22, y: 0.09}
+  m_EdgeRadius: 0
+--- !u!114 &3611822439291964454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007299955148453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3ba2bfe599db0a4793f79ba44da4c39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPlayer: {fileID: 3948966629963419180}
+  hitClip: {fileID: 0}
+  tip: {fileID: 0}
+  back: {fileID: 0}
+  weaponType: 1
+  movementState: 0
 --- !u!1001 &755564415462274229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -342,6 +386,12 @@ Animator:
 --- !u!4 &8044612609080278996 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7338749040040233825, guid: f30ad63695c27504b8c2aa87564a6ccc,
+    type: 3}
+  m_PrefabInstance: {fileID: 755564415462274229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &828007299955148453 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 72587102131073552, guid: f30ad63695c27504b8c2aa87564a6ccc,
     type: 3}
   m_PrefabInstance: {fileID: 755564415462274229}
   m_PrefabAsset: {fileID: 0}

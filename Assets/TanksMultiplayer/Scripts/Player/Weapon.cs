@@ -9,7 +9,6 @@ namespace Errantastra
 {
     public class Weapon : MonoBehaviour
     {
-        [HideInInspector]
         public HumanPlayer myPlayer;
 
         /// <summary>
@@ -19,9 +18,6 @@ namespace Errantastra
 
         //reference to collider component
         private BoxCollider2D myCollider;
-
-        public Transform tip;
-        public Transform back;
 
         public enum WeaponType
         {
