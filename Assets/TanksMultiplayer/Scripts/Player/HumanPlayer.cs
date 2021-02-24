@@ -514,6 +514,7 @@ namespace Errantastra {
             if (!isServer) return;
             if (hitPlayer.movementState == MovementState.blocking && spear.movementState != Weapon.MovementState.flying)
             {
+                Debug.Log("First Pass");
                 if (IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position,45.0f))
                 {
                     return;
@@ -846,8 +847,6 @@ namespace Errantastra {
             networkedSpearClone.GetComponent<NetworkedSpear>().StartFlying();
 
             NetworkServer.Spawn(networkedSpearClone);
-
-            Debug.Log("Networked spear clone.player = " + networkedSpearClone.GetComponent<Weapon>().myPlayer);
             
             networkedSpearClone = null;
 

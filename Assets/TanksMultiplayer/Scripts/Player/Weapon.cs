@@ -46,11 +46,16 @@ namespace Errantastra
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.tag == "Player" && movementState != MovementState.stuck)
+            if (collision.tag == "Player")
             {
                 HumanPlayer hitPlayer = collision.gameObject.GetComponent<HumanPlayer>();
-                if (hitPlayer == myPlayer) return;
-                myPlayer.HitPlayerWithHandWeapon(hitPlayer, this);
+
+                // myPlayer is only assigned on the server but we can't use server checks on a MonoBehavior.
+                if (myPlayer != null)
+                {
+                    if (hitPlayer == myPlayer) return;
+                    myPlayer.HitPlayerWithHandWeapon(hitPlayer, this);
+                }               
             }
         }
     }
