@@ -517,11 +517,8 @@ namespace Errantastra {
             if (!isServer) return;
             if (attackingState == AttackingState.notAttacking) return;
             if (spear.weaponType == Weapon.WeaponType.spear && hitPlayer.movementState == MovementState.rolling) return;
-            Debug.Log("hitPlayer.movementState = " + hitPlayer.movementState.ToString());
-            Debug.Log("spear.movementState = " + spear.movementState.ToString());
             if (hitPlayer.movementState == MovementState.blocking && spear.movementState == Weapon.MovementState.held)
             {
-                Debug.Log("is looking at player? " + IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position, 45.0f).ToString());
                 if (IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position,45.0f))
                 {
                     return;
