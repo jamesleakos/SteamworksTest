@@ -73,7 +73,6 @@ namespace Errantastra {
         private float longShieldAttackLength;
         private float throwingAnimLength;
         private float attackPatienceBuffer = 0.1f;
-        private float endAttackTime;
         
         public enum AnimationState
         {
@@ -330,7 +329,6 @@ namespace Errantastra {
                 }
                 else
                 {
-                    endAttackTime = Time.time + throwingAnimLength;
                     ClientThrowSpear(MousePosition());
                     return;
                 }
@@ -354,29 +352,13 @@ namespace Errantastra {
             {
                 if (movementState == MovementState.blocking)
                 {
-                    if (Input.GetKey(KeyCode.LeftShift))
-                    {
-                        endAttackTime = Time.time + longShieldAttackLength;
-                        ClientLongShieldAttack(MousePosition());
-                    }
-                    else
-                    {
-                        endAttackTime = Time.time + shieldAttackLength;
-                        ClientShieldAttack(MousePosition());
-                    }
+                    if (Input.GetKey(KeyCode.LeftShift)) ClientLongShieldAttack(MousePosition());
+                    else ClientShieldAttack(MousePosition());
                 }
                 else
                 {
-                    if (movementState == MovementState.running)
-                    {
-                        endAttackTime = Time.time + longNormalAttackLength;
-                        ClientLongNormalAttack(MousePosition());
-                    }
-                    else
-                    {
-                        endAttackTime = Time.time + normalAttackLength;
-                        ClientNormalAttack(MousePosition());
-                    }
+                    if (movementState == MovementState.running) ClientLongNormalAttack(MousePosition());
+                    else ClientNormalAttack(MousePosition());
                 }
 
                 waitingToAttack = false;
