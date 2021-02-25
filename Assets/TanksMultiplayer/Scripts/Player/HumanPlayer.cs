@@ -256,6 +256,8 @@ namespace Errantastra {
             DetermineMovementInputs();
             DetermineAttackingAndRollingInputs();
             MoveCharacter();
+
+            if (Time.time > endAttackTime) EndAttack();
         }
 
         protected void LateUpdate()
