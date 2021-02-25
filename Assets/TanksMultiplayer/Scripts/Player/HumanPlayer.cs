@@ -293,12 +293,6 @@ namespace Errantastra {
             }
         }
 
-        [Command]
-        private void CmdEndAction()
-        {
-            takingAction = false;
-        }
-
         #endregion
 
         #region Player Input Functions
@@ -345,6 +339,7 @@ namespace Errantastra {
 
             if (movementState == MovementState.rolling)
             {
+                Debug.Log("Movement State Rolling");
                 if (movementState == MovementState.rolling)
                 {
                     ContinueRoll();
@@ -354,6 +349,7 @@ namespace Errantastra {
 
             if (waitingToAttack && !takingAction)
             {
+                Debug.Log("Will attack");
                 if (movementState == MovementState.blocking)
                 {
                     if (Input.GetKey(KeyCode.LeftShift))
@@ -678,6 +674,8 @@ namespace Errantastra {
 
         #region Sending Attacks to Server and Back
 
+        #region Attacks
+
         [Command]
         private void CmdLongShieldAttack(Vector3 mousePos)
         {
@@ -767,6 +765,27 @@ namespace Errantastra {
 
             CmdThrowSpear(mousePos);
         }
+
+        #endregion
+
+        #region Ending Attacks
+
+        [Command]
+        private void CmdEndAction()
+        {
+            Debug.Log("CmdEndAction");
+            takingAction = false;
+        }
+
+        public void EndAttack()
+        {
+            Debug.Log("End Attack");
+            if (!Input.GetKey(KeyCode.Mouse1) && isLocalPlayer) RotateToMouse();
+            attackingState = AttackingState.notAttacking;
+            takingAction = false;
+        }
+
+        #endregion
 
         #endregion
 
@@ -922,13 +941,6 @@ namespace Errantastra {
                 if (movementState == MovementState.blocking) SetOrKeepState(AnimationState.block);
                 else SetOrKeepState(AnimationState.idle);
             }
-        }
-
-        public void EndAttack ()
-        {
-            if(!Input.GetKey(KeyCode.Mouse1) && isLocalPlayer) RotateToMouse();
-            attackingState = AttackingState.notAttacking;
-            takingAction = false;
         }
 
         #endregion
