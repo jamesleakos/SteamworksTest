@@ -72,7 +72,7 @@ namespace Errantastra {
         private float shieldAttackLength;
         private float longShieldAttackLength;
         private float throwingAnimLength;
-        private float attackPatienceBuffer = 0.1f;
+        private float attackPatienceBuffer = 0.05f;
         private float endAttackTime;
         
         public enum AnimationState
@@ -257,7 +257,7 @@ namespace Errantastra {
             DetermineAttackingAndRollingInputs();
             MoveCharacter();
 
-            if (Time.time > endAttackTime) EndAttack();
+            if (Time.time > endAttackTime && attackingState != AttackingState.notAttacking) EndAttack("Update()");
         }
 
         protected void LateUpdate()
@@ -326,7 +326,7 @@ namespace Errantastra {
                 }
                 else
                 {
-                    endAttackTime = Time.time + throwingAnimLength;
+                    endAttackTime = Time.time + throwingAnimLength + attackPatienceBuffer;
                     ClientThrowSpear(MousePosition());
                     return;
                 }
@@ -339,7 +339,6 @@ namespace Errantastra {
 
             if (movementState == MovementState.rolling)
             {
-                Debug.Log("Movement State Rolling");
                 if (movementState == MovementState.rolling)
                 {
                     ContinueRoll();
@@ -347,19 +346,18 @@ namespace Errantastra {
                 return;
             }
 
-            if (waitingToAttack && !takingAction)
+            if (waitingToAttack && Time.time > endAttackTime)
             {
-                Debug.Log("Will attack");
                 if (movementState == MovementState.blocking)
                 {
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
-                        endAttackTime = Time.time + longShieldAttackLength;
+                        endAttackTime = Time.time + longShieldAttackLength + attackPatienceBuffer;
                         ClientLongShieldAttack(MousePosition());
                     }
                     else
                     {
-                        endAttackTime = Time.time + shieldAttackLength;
+                        endAttackTime = Time.time + shieldAttackLength + attackPatienceBuffer;
                         ClientShieldAttack(MousePosition());
                     }
                 }
@@ -367,12 +365,12 @@ namespace Errantastra {
                 {
                     if (movementState == MovementState.running)
                     {
-                        endAttackTime = Time.time + longNormalAttackLength;
+                        endAttackTime = Time.time + longNormalAttackLength + attackPatienceBuffer;
                         ClientLongNormalAttack(MousePosition());
                     }
                     else
                     {
-                        endAttackTime = Time.time + normalAttackLength;
+                        endAttackTime = Time.time + normalAttackLength + attackPatienceBuffer;
                         ClientNormalAttack(MousePosition());
                     }
                 }
@@ -773,16 +771,16 @@ namespace Errantastra {
         [Command]
         private void CmdEndAction()
         {
-            Debug.Log("CmdEndAction");
             takingAction = false;
         }
 
-        public void EndAttack()
+        public void EndAttack(string source)
         {
-            Debug.Log("End Attack");
             if (!Input.GetKey(KeyCode.Mouse1) && isLocalPlayer) RotateToMouse();
             attackingState = AttackingState.notAttacking;
             takingAction = false;
+
+            CmdEndAction();
         }
 
         #endregion
