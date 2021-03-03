@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/TanksMultiplayer/Scenes/StartScreen.unity
+    path: Assets/Errantastra/Scenes/StartScreen.unity
     guid: dbed79f223780cf4cb485cdddaa568f1
   - enabled: 1
-    path: Assets/TanksMultiplayer/Scenes/TDM_Game.unity
+    path: Assets/Errantastra/Scenes/TDM_Game.unity
     guid: 31e6264386ab7524c8b05daefe87bec3
   m_configObjects: {}
