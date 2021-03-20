@@ -106,6 +106,7 @@ namespace Errantastra {
         private GameObject spearClone;
 
         private HeathenCustomNetworkManager networkManager;
+        private NetworkManagerCustom testingNetworkManager;
 
         #endregion
 
@@ -218,7 +219,14 @@ namespace Errantastra {
         protected override void Start()
         {
             networkManager = GameObject.FindObjectOfType<HeathenCustomNetworkManager>();
-            networkedSpearPrefab = networkManager.spawnPrefabs.Find(x => x.name == "NetworkedSpear");
+            if (networkManager == null)
+            {
+                testingNetworkManager = FindObjectOfType<NetworkManagerCustom>();
+                networkedSpearPrefab = testingNetworkManager.spawnPrefabs.Find(x => x.name == "NetworkedSpear");
+            } else
+            {
+                networkedSpearPrefab = networkManager.spawnPrefabs.Find(x => x.name == "NetworkedSpear");
+            }
 
             CmdSpearStart();
         }
