@@ -33,24 +33,6 @@ namespace Errantastra {
 
         #endregion
 
-        #region Name and Team
-
-        /// <summary>
-        /// Player name synced across the network.
-        /// </summary>
-        [HideInInspector]
-        [SyncVar]
-        public string myName;
-
-        /// <summary>
-        /// Team value assigned by the server.
-        /// </summary>
-		[HideInInspector]
-        [SyncVar]
-        public int teamIndex;
-
-        #endregion
-
         #region Camera
 
         Camera mainCamera;
