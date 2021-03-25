@@ -79,11 +79,20 @@ namespace Errantastra
             {
                 Move(velocity * Time.deltaTime);
             }
+
+            if (velocity == new Vector3(0, 0, 0) && spearState != SpearState.stuck) StopFlying();
         }
 
         [ServerCallback]
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            Debug.Log(collision.gameObject.name);
+            if (collision.tag == "Spear") return;
+            if (collision.tag == "Player")
+            {
+                var p = collision.gameObject.GetComponent<HumanPlayer>();
+                if (p == myPlayer) return;
+            }
             StopFlying();
         }
 
@@ -117,7 +126,7 @@ namespace Errantastra
                 velocity.x = 0;
                 velocity.y = 0;
             }
-
+            Debug.Log("Stop Flying");
             gameObject.GetComponent<Weapon>().movementState = Weapon.MovementState.stuck;
 
             NetworkManager.Destroy(gameObject, despawnDelay);

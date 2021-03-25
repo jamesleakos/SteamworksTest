@@ -12,11 +12,6 @@ namespace Errantastra
     public class UIGame : MonoBehaviour
     {
         /// <summary>
-        /// Joystick components controlling player movement and actions on mobile devices.
-        /// </summary>
-        public UIJoystick[] controls;
-        
-        /// <summary>
         /// UI sliders displaying team fill for each team using absolute values.
         /// </summary>
         public Slider[] teamSize;
@@ -65,21 +60,6 @@ namespace Errantastra
             while (GameManager.GetInstance() == null || GameManager.GetInstance().localPlayer == null)
                 yield return null;
 
-            //on non-mobile devices hide joystick controls, except in editor
-            #if !UNITY_EDITOR && (UNITY_STANDALONE || UNITY_WEBGL)
-                ToggleControls(false);
-            #endif
-        
-            //on mobile devices enable additional aiming indicator
-            #if !UNITY_EDITOR && !UNITY_STANDALONE && !UNITY_WEBGL
-            if (aimIndicator != null)
-            {
-                Transform indicator = Instantiate(aimIndicator).transform;
-                indicator.SetParent(GameManager.GetInstance().localPlayer.shotPos);
-                indicator.localPosition = new Vector3(0f, 0f, 3f);
-            }
-            #endif
-
             //play background music
             AudioManager.PlayMusic(1);
         }
@@ -111,16 +91,7 @@ namespace Errantastra
             teamScore[index].text = GameManager.GetInstance().score[index].ToString();
             teamScore[index].GetComponent<Animator>().Play("Animation");
         }
-
-        
-        /// <summary>
-        /// Enables or disables visibility of joystick controls.
-        /// </summary>
-        public void ToggleControls(bool state)
-        {
-            for(int i = 0; i < controls.Length; i++)
-                controls[i].gameObject.SetActive(state);
-        }
+      
 
         
         /// <summary>
@@ -129,11 +100,6 @@ namespace Errantastra
         /// </summary>
         public void SetDeathText(string playerName, Team team)
         {
-            //hide joystick controls while displaying death text
-            #if UNITY_EDITOR || (!UNITY_STANDALONE && !UNITY_WEBGL)
-                ToggleControls(false);
-            #endif
-            
             //show killer name and colorize the name converting its team color to an HTML RGB hex value for UI markup
             deathText.text = "KILLED BY\n<color=#" + ColorUtility.ToHtmlStringRGB(Color.red) + ">" + playerName + "</color>";
         }
@@ -154,11 +120,6 @@ namespace Errantastra
         /// </summary>
         public void DisableDeath()
         {
-            //show joystick controls after disabling death text
-            #if UNITY_EDITOR || (!UNITY_STANDALONE && !UNITY_WEBGL)
-                ToggleControls(true);
-            #endif
-            
             //clear text component values
             deathText.text = string.Empty;
             spawnDelayText.text = string.Empty;
@@ -170,11 +131,6 @@ namespace Errantastra
         /// </summary>
         public void SetGameOverText(Team team)
         {
-            //hide joystick controls while displaying game end text
-            #if UNITY_EDITOR || (!UNITY_STANDALONE && !UNITY_WEBGL)
-                ToggleControls(false);
-            #endif
-            
             //show winning team and colorize it by converting the team color to an HTML RGB hex value for UI markup
             gameOverText.text = "TEAM <color=#" + ColorUtility.ToHtmlStringRGB(Color.red) + ">" + team.name + "</color> WINS!";
         }
@@ -189,13 +145,6 @@ namespace Errantastra
             //hide text but enable game over window
             gameOverText.gameObject.SetActive(false);
             gameOverMenu.SetActive(true);
-            
-            //check whether an ad was shown during the game
-            //if no ad was shown during the whole round, we request one here
-            #if UNITY_ADS
-            if(!UnityAdsManager.didShowAd())
-                UnityAdsManager.ShowAd(true);
-            #endif
         }
 
 

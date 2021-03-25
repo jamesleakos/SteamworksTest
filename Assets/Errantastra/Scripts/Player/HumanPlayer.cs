@@ -108,6 +108,9 @@ namespace Errantastra {
         private HeathenCustomNetworkManager networkManager;
         private NetworkManagerCustom testingNetworkManager;
 
+        public float spearCooldownTime = 2.0f;
+        private float timeToReloadSpear;
+
         #endregion
 
         // END VARIABLE REGION
@@ -235,6 +238,12 @@ namespace Errantastra {
         {
             base.Update();
 
+            if (!holdingSpear && timeToReloadSpear < Time.time && isServer)
+            {
+                Debug.Log("It is time to load a spear");
+                TimeToLoadSpear();
+            }
+
             //skip further calls for remote clients
             if (!isLocalPlayer)
             {
@@ -316,9 +325,12 @@ namespace Errantastra {
                 }
                 else
                 {
-                    endAttackTime = Time.time + throwingAnimLength + attackPatienceBuffer;
-                    ClientThrowSpear(MousePosition());
-                    return;
+                    if (holdingSpear)
+                    {
+                        endAttackTime = Time.time + throwingAnimLength + attackPatienceBuffer;
+                        ClientThrowSpear(MousePosition());
+                        return;
+                    }                    
                 }
             }
 
@@ -865,6 +877,12 @@ namespace Errantastra {
 
             RpcReleaseSpear();
 
+            timeToReloadSpear = Time.time + spearCooldownTime;
+        }
+
+        [ServerCallback]
+        public void TimeToLoadSpear()
+        {
             LoadSpear();
             RpcLoadSpear();
         }

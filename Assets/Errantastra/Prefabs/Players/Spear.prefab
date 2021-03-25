@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 348657298272473542}
   m_Layer: 0
   m_Name: Spear
-  m_TagString: Untagged
+  m_TagString: Spear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ba2bfe599db0a4793f79ba44da4c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPlayer: {fileID: 0}
   hitClip: {fileID: 0}
-  tip: {fileID: 3126406656048019695}
-  back: {fileID: 1508984792751388098}
-  spearState: 0
+  weaponType: 0
+  movementState: 0
