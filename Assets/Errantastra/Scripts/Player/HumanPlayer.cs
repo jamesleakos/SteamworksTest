@@ -180,7 +180,7 @@ namespace Errantastra {
         public override void OnStartClient()
         {
             //get corresponding team and colorize renderers in team color
-            //Team team = GameManager.GetInstance().teams[teamIndex];
+            Team team = GameManager.GetInstance().teams[teamIndex];
             // probably need to assign some color or something here
 
 
@@ -515,7 +515,7 @@ namespace Errantastra {
             if (!isServer) return;
             if (attackingState == AttackingState.notAttacking) return;
             if (spear.weaponType == Weapon.WeaponType.spear && hitPlayer.movementState == MovementState.rolling) return;
-            if (hitPlayer.movementState == MovementState.blocking && spear.movementState == Weapon.MovementState.held)
+            if (hitPlayer.movementState == MovementState.blocking) //&& spear.movementState == Weapon.MovementState.held)
             {
                 if (IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position,45.0f))
                 {

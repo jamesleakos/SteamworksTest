@@ -70,11 +70,6 @@ namespace Errantastra
         void Awake()
         {
             instance = this;
-
-            //if Unity Ads is enabled, hook up its result callback
-            #if UNITY_ADS
-                UnityAdsManager.adResultEvent += HandleAdResult;
-            #endif
         }
         
 
@@ -203,31 +198,6 @@ namespace Errantastra
             
             return pos;
         }
-
-
-        //implements what to do when an ad view completes
-        #if UNITY_ADS
-        void HandleAdResult(ShowResult result)
-        {
-            switch (result)
-            {
-                //in case the player successfully watched an ad,
-                //it sends a request for it be respawned
-                case ShowResult.Finished:
-                case ShowResult.Skipped:
-                    localPlayer.CmdRespawn();
-                    break;
-                
-                //in case the ad can't be shown, just handle it
-                //like we wouldn't have tried showing a video ad
-                //with the regular death countdown (force ad skip)
-                case ShowResult.Failed:
-                    DisplayDeath(true);
-                    break;
-            }
-        }
-        #endif
-
         
         /// <summary>
         /// Adds points to the target team depending on matching game mode and score type.
@@ -244,6 +214,7 @@ namespace Errantastra
                     {
                         case ScoreType.Kill:
                             score[teamIndex] += 1;
+                            Debug.Log("Team " + teamIndex + " has " + score[teamIndex] + " points.");
                             break;
                     }
                 break;
