@@ -1,10 +1,9 @@
 
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 using Mirror;
-#if UNITY_ADS
-using UnityEngine.Advertisements;
-#endif
+
 
 namespace Errantastra
 {
@@ -36,19 +35,21 @@ namespace Errantastra
         /// <summary>
         /// Definition of playing teams with additional properties.
         /// </summary>
-        public Team[] teams;
+        public List<Team> teams = new List<Team>();
+
+        public List<Transform> spawns = new List<Transform>();
 
         /// <summary>
         /// Networked list storing team fill for each team.
         /// E.g. if size[0] = 2, there are two players in team 0.
         /// </summary>
-        public SyncListInt size = new SyncListInt();
+        public SyncList<int> size = new SyncList<int>();
 
         /// <summary>
         /// Networked list storing team scores for each team.
         /// E.g. if score[0] = 2, team 0 scored 2 points.
         /// </summary>
-        public SyncListInt score = new SyncListInt();
+        public SyncList<int> score = new SyncList<int>();
 
         /// <summary>
         /// The maximum amount of kills to reach before ending the game.
@@ -98,9 +99,9 @@ namespace Errantastra
         public override void OnStartServer()
         {
             //should execute only on the initial master
-            if(size.Count != teams.Length)
+            if(size.Count != teams.Count)
             {
-                for(int i = 0; i < teams.Length; i++)
+                for(int i = 0; i < teams.Count; i++)
                 {
                     size.Add(0);
                     score.Add(0);
@@ -125,11 +126,11 @@ namespace Errantastra
                 
             //these callbacks are not handled reliable by UNET, but we subscribe nonetheless
             //maybe some display updates are called twice then which isn't too bad
-            size.Callback += ui.OnTeamSizeChanged;
-            score.Callback += ui.OnTeamScoreChanged;
+            //size.Callback += ui.OnTeamSizeChanged;
+            //score.Callback += ui.OnTeamScoreChanged;
             //call the hooks manually for the first time, for each team
-            for (int i = 0; i < teams.Length; i++) ui.OnTeamSizeChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
-            for(int i = 0; i < teams.Length; i++) ui.OnTeamScoreChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
+            for (int i = 0; i < teams.Count; i++) ui.OnTeamSizeChanged(i, 0, 0);
+            for(int i = 0; i < teams.Count; i++) ui.OnTeamScoreChanged(i, 0, 0);
         }
 
 
@@ -141,62 +142,49 @@ namespace Errantastra
         public void UpdatePlayerUI ()
         {
             ui.UpdatePlayerUI();
-        }
-
-        /// <summary>
-        /// Returns the next team index a player should be assigned to.
-        /// </summary>
-        public int GetTeamFill()
-        {
-            //init variables
-            int teamNo = 0;
-
-            int min = size[0];
-            //loop over teams to find the lowest fill
-            for(int i = 0; i < teams.Length; i++)
-            {
-                //if fill is lower than the previous value
-                //store new fill and team for next iteration
-                if(size[i] < min)
-                {
-                    min = size[i];
-                    teamNo = i;
-                }
-            }
-            
-            //return index of lowest team
-            return teamNo;
-        }
+        }   
         
+        public int GetTeamIndex()
+        {
+            Team newTeam = new Team();
+            newTeam.name = "Team " + (teams.Count).ToString();
+            teams.Add(newTeam);
+
+            score.Add(0);
+
+            //This will have to change when we have multiple teams
+            size.Add(1);
+
+            return teams.Count - 1;
+        }
         
         /// <summary>
         /// Returns a random spawn position within the team's spawn area.
         /// </summary>
-        public Vector3 GetSpawnPosition(int teamIndex)
+        public Vector3 GetSpawnPosition()
         {
-            //init variables
-            Vector3 pos = teams[teamIndex].spawn.position;
-            BoxCollider col = teams[teamIndex].spawn.GetComponent<BoxCollider>();
+            float furthestDistance = 0;
+            Transform furthestSpawn = spawns[0];
 
-            if(col != null)
+            var players = GameObject.FindObjectsOfType<Player>();
+            if (players.Length == 0) return furthestSpawn.position; 
+
+            foreach (var spawn in spawns)
             {
-                //find a position within the box collider range, first set fixed y position
-                //the counter determines how often we are calculating a new position if out of range
-                pos.y = col.transform.position.y;
-                int counter = 10;
-                
-                //try to get random position within collider bounds
-                //if it's not within bounds, do another iteration
-                do
+                float closestPlayer = Mathf.Infinity;
+                foreach (var player in players)
                 {
-                    pos.x = UnityEngine.Random.Range(col.bounds.min.x, col.bounds.max.x);
-                    pos.z = UnityEngine.Random.Range(col.bounds.min.z, col.bounds.max.z);
-                    counter--;
+                    var distance = (player.gameObject.transform.position - spawn.position).magnitude;
+                    if (distance < closestPlayer) closestPlayer = distance;
                 }
-                while(!col.bounds.Contains(pos) && counter > 0);
+                if (closestPlayer > furthestDistance)
+                {
+                    furthestDistance = closestPlayer;
+                    furthestSpawn = spawn;
+                }
             }
             
-            return pos;
+            return furthestSpawn.position;
         }
         
         /// <summary>
@@ -234,7 +222,7 @@ namespace Errantastra
                 break;
             }
 
-            ui.OnTeamScoreChanged(SyncList<int>.Operation.OP_ADD, teamIndex, 0, 0);
+            ui.OnTeamScoreChanged(teamIndex, 0, 0);
         }
 
         /// <summary>
@@ -246,7 +234,7 @@ namespace Errantastra
             bool isOver = false;
             
             //loop over teams to find the highest score
-            for(int i = 0; i < teams.Length; i++)
+            for(int i = 0; i < teams.Count; i++)
             {
                 //score is greater or equal to max score,
                 //which means the game is finished
@@ -256,8 +244,9 @@ namespace Errantastra
                     break;
                 }
             }
-            
+
             //return the result
+            Debug.Log("Game is over equals " + isOver.ToString());
             return isOver;
         }
         
@@ -283,12 +272,6 @@ namespace Errantastra
                 ui.killCounter[1].text = (int.Parse(ui.killCounter[1].text) + 1).ToString();
                 ui.killCounter[1].GetComponent<Animator>().Play("Animation");
             }
-
-            //calculate if we should show a video ad
-            #if UNITY_ADS
-            if (!skipAd && UnityAdsManager.ShowAd())
-                return;
-            #endif
 
             //when no ad is being shown, set the death text
             //and start waiting for the respawn delay immediately
@@ -366,12 +349,6 @@ namespace Errantastra
         /// The name of the team shown on game over.
         /// </summary>
         public string name;
-            
-        /// <summary>
-        /// The spawn point of a team in the scene. In case it has a BoxCollider
-        /// component attached, a point within the collider bounds will be used.
-        /// </summary>
-        public Transform spawn;
     }
 
 

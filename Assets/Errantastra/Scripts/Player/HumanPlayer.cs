@@ -18,7 +18,7 @@ namespace Errantastra {
         // START VARIABLE REGION
 
         #region Steamworks Stuff
-
+        public bool steamOff;
         public SteamSettings steamSettings;
         [FormerlySerializedAs("LobbySettings")]
         public SteamworksLobbySettings lobbySettings;
@@ -153,6 +153,7 @@ namespace Errantastra {
         /// </summary>
         public override void OnStartAuthority()
         {
+            if (steamOff) return;
             Debug.Log("Player Controller On Start Authority has been called!");
 
             steamId = SteamUser.GetSteamID().m_SteamID;
@@ -181,6 +182,7 @@ namespace Errantastra {
         {
             //get corresponding team and colorize renderers in team color
             Team team = GameManager.GetInstance().teams[teamIndex];
+            Debug.Log("I am on team " + teamIndex.ToString());
             // probably need to assign some color or something here
 
 
@@ -564,6 +566,7 @@ namespace Errantastra {
             //the maximum score has been reached now
             if (GameManager.GetInstance().IsGameOver())
             {
+                Debug.Log("Game is over");
                 //tell all clients the winning team
                 RpcGameOver(killingPlayer.teamIndex);
                 return;
@@ -615,7 +618,7 @@ namespace Errantastra {
                 //send player back to the team area, this will get overwritten by the exact position from the client itself later on
                 //we just do this to avoid players "popping up" from the position they died and then teleporting to the team area instantly
                 //this is manipulating the internal PhotonTransformView cache to update the networkPosition variable
-                transform.position = GameManager.GetInstance().GetSpawnPosition(teamIndex);
+                transform.position = GameManager.GetInstance().GetSpawnPosition();
             }
 
             //further changes only affect the local client
@@ -655,7 +658,7 @@ namespace Errantastra {
             mainCamera.GetComponent<FollowTarget>().target = gameObject.transform;
 
             //get team area and reposition it there
-            transform.position = GameManager.GetInstance().GetSpawnPosition(teamIndex);
+            transform.position = GameManager.GetInstance().GetSpawnPosition();
         }
 
         /// <summary>
