@@ -32,7 +32,7 @@ MonoBehaviour:
   movementState: 0
   attackingState: 0
   takingAction: 0
-  steamOff: 0
+  steamOff: 1
   steamSettings: {fileID: 11400000, guid: e56f48543a769984c897a8b4ee49b69e, type: 2}
   lobbySettings: {fileID: 11400000, guid: aadb3480c593d36468d3cd0a0d427b77, type: 2}
   authorityUser: {fileID: 0}
@@ -328,11 +328,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AssetId
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8932938263068831100, guid: f30ad63695c27504b8c2aa87564a6ccc,
-        type: 3}
-      propertyPath: serverOnly
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8958194779771941148, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
