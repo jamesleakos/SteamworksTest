@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.SceneManagement;
 using Mirror;
 
@@ -36,9 +37,25 @@ namespace Errantastra
         public override void OnStartServer()
         {
             Debug.Log("NetworkManagerCustom.OnStartServer");
+            spawnPrefabs.Clear();
+            spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
             base.OnStartServer();
 
             NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
+        }
+
+        public override void OnStartClient()
+        {
+            spawnPrefabs.Clear();
+            spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
+
+            ClientScene.ClearSpawners();
+
+            foreach (var prefab in spawnPrefabs)
+            {
+                ClientScene.RegisterPrefab(prefab);
+            }
+            base.OnStartClient();
         }
 
         /// <summary>
@@ -183,19 +200,20 @@ namespace Errantastra
             playerObj = playerPrefab;
 
             //get the team value for this player
-            int teamIndex = GameManager.GetInstance().GetTeamFill();
+            int teamIndex = GameManager.GetInstance().GetTeamIndex();
             //get spawn position for this team and instantiate the player there
-            Vector3 startPos = GameManager.GetInstance().GetSpawnPosition(teamIndex);
+            Vector3 startPos = GameManager.GetInstance().GetSpawnPosition();
 	        playerObj = (GameObject)Instantiate(playerObj, startPos, Quaternion.identity);
             
             //assign name (also in JoinMessage) and team to Player component
             Player p = playerObj.GetComponent<Player>();
             p.myName = message.playerName;
             p.teamIndex = teamIndex;
+            Debug.Log(p.myName + " is on Team " + p.teamIndex);
 
             //update the game UI to correctly display the increased team size
-            GameManager.GetInstance().size[p.teamIndex]++;
-            GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_ADD, p.teamIndex, 0, 0);
+            //GameManager.GetInstance().size[p.teamIndex]++;
+            //GameManager.GetInstance().ui.OnTeamSizeChanged(p.teamIndex, 0, 0);
 
             //finally map the player gameobject to the connection requesting it
 	        NetworkServer.AddPlayerForConnection(conn, playerObj);
@@ -222,7 +240,7 @@ namespace Errantastra
             if (GameManager.GetInstance().size.Count >= p.teamIndex)
             {
                 GameManager.GetInstance().size[p.teamIndex]--;
-                GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_REMOVEAT, p.teamIndex, 0, 0);
+                GameManager.GetInstance().ui.OnTeamSizeChanged(p.teamIndex, 0, 0);
             }
 
             base.OnServerDisconnect(conn);

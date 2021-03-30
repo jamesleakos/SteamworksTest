@@ -75,9 +75,9 @@ namespace Errantastra
         /// This is an implementation for changes to the team fill, updating the slider values.
         /// Parameters: type of operation, index of team which received updates.
         /// </summary>
-        public void OnTeamSizeChanged(Mirror.SyncListInt.Operation op, int index, int oldValue, int newValue)
+        public void OnTeamSizeChanged(int index, int oldValue, int newValue)
         {
-            teamSize[index].value = GameManager.GetInstance().size[index];
+            //teamSize[index].value = GameManager.GetInstance().size[index];
         }
         
 
@@ -86,10 +86,10 @@ namespace Errantastra
         /// This is an implementation for changes to the team score, updating the text values.
         /// Parameters: type of operation, index of team which received updates.
         /// </summary>
-        public void OnTeamScoreChanged(Mirror.SyncListInt.Operation op, int index, int oldValue, int newValue)
+        public void OnTeamScoreChanged(int index, int oldValue, int newValue)
         {
             teamScore[index].text = GameManager.GetInstance().score[index].ToString();
-            teamScore[index].GetComponent<Animator>().Play("Animation");
+            //teamScore[index].GetComponent<Animator>().Play("Animation");
         }
       
 
