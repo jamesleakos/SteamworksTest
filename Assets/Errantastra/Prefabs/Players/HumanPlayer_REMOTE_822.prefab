@@ -17,6 +17,8 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 512
+  myName: 
+  teamIndex: 0
   bodyAndWeapons: {fileID: 8044612609080278996}
   bodyAndWeaponsRotation: {x: 0, y: 0, z: 0, w: 0}
   remoteRotationSpeed: 30
@@ -30,16 +32,11 @@ MonoBehaviour:
   movementState: 0
   attackingState: 0
   takingAction: 0
-<<<<<<< HEAD
-=======
   steamOff: 0
->>>>>>> parent of 733e8bf... Revert "pushing to see if it works at least over steam"
   steamSettings: {fileID: 11400000, guid: e56f48543a769984c897a8b4ee49b69e, type: 2}
   lobbySettings: {fileID: 11400000, guid: aadb3480c593d36468d3cd0a0d427b77, type: 2}
   authorityUser: {fileID: 0}
   steamId: 0
-  myName: 
-  teamIndex: 0
   animator: {fileID: 7271643152800728660}
   animationState: 0
   shield: 0
@@ -49,6 +46,7 @@ MonoBehaviour:
     type: 3}
   spearPrefab: {fileID: 8867412204619696729, guid: 08d24568fb03693468f1bdeece7e1c9a,
     type: 3}
+  spearCooldownTime: 2
 --- !u!61 &4128753635117000395
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -89,8 +87,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayer: {fileID: 3948966629963419180}
   hitClip: {fileID: 0}
-  tip: {fileID: 0}
-  back: {fileID: 0}
   weaponType: 1
   movementState: 0
 --- !u!1001 &755564415462274229

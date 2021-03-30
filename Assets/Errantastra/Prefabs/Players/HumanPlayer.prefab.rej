@@ -1,0 +1,12 @@
+diff a/Assets/Errantastra/Prefabs/Players/HumanPlayer.prefab b/Assets/Errantastra/Prefabs/Players/HumanPlayer.prefab	(rejected hunks)
+@@ -30,6 +30,10 @@
+    movementState: 0
+    attackingState: 0
+    takingAction: 0
+++<<<<<<< HEAD
+++=======
++   steamOff: 0
+++>>>>>>> parent of 733e8bf... Revert "pushing to see if it works at least over steam"
+    steamSettings: {fileID: 11400000, guid: e56f48543a769984c897a8b4ee49b69e, type: 2}
+    lobbySettings: {fileID: 11400000, guid: aadb3480c593d36468d3cd0a0d427b77, type: 2}
+    authorityUser: {fileID: 0}
