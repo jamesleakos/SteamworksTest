@@ -594,27 +594,27 @@ PrefabInstance:
     - target: {fileID: 224176841439733122, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224176841439733122, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224176841439733122, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224176841439733122, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224299602010953466, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224299602010953466, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
@@ -629,22 +629,22 @@ PrefabInstance:
     - target: {fileID: 224500540785964124, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224500540785964124, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224530421972509348, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224530421972509348, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224530421972509348, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
@@ -654,22 +654,22 @@ PrefabInstance:
     - target: {fileID: 224553900854707820, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224553900854707820, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224597772971110816, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224597772971110816, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224597772971110816, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
@@ -1153,7 +1153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &253577534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1372,12 +1372,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 253577533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f43c94833eabf46a621802d31e7f2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 98c5c4e07f5e01b448e36c86b2711fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
   runInBackground: 1
-  autoStartServerBuild: 1
+  autoStartServerBuild: 0
   showDebugMessages: 0
   serverTickRate: 30
   serverBatching: 0
@@ -1396,6 +1396,85 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e, type: 3}
+  OnHostStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: aadb3480c593d36468d3cd0a0d427b77, type: 2}
+        m_MethodName: SetLobbyGameServer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnServerStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnClientStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnServerStopped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnClientStopped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnHostStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRegisterServerMessages:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRegisterClientMessages:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &253577538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1665,7 +1744,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &353965291
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1961,7 +2040,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2132258170}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999999
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3272,7 +3351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &826348229
 Transform:
   m_ObjectHideFlags: 0
@@ -5272,7 +5351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1829303721
 RectTransform:
   m_ObjectHideFlags: 0
