@@ -37,25 +37,9 @@ namespace Errantastra
         public override void OnStartServer()
         {
             Debug.Log("NetworkManagerCustom.OnStartServer");
-            spawnPrefabs.Clear();
-            spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
             base.OnStartServer();
 
             NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
-        }
-
-        public override void OnStartClient()
-        {
-            spawnPrefabs.Clear();
-            spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
-
-            ClientScene.ClearSpawners();
-
-            foreach (var prefab in spawnPrefabs)
-            {
-                ClientScene.RegisterPrefab(prefab);
-            }
-            base.OnStartClient();
         }
 
         /// <summary>
