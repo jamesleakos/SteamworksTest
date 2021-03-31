@@ -7,15 +7,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.SceneManagement;
 using Mirror;
-using HeathenEngineering.SteamApi.Networking;
-using HeathenEngineering.SteamApi.Foundation;
-using UnityEngine.Serialization;
-using UnityEngine.Events;
-
-
 
 namespace Errantastra
 {
@@ -25,66 +18,39 @@ namespace Errantastra
     /// </summary>
 	public class NetworkManagerCustom : NetworkManager
     {
-        // from Heathen Custom Network Manager
-
-        public UnityEvent OnHostStarted;
-        public UnityEvent OnServerStarted;
-        public UnityEvent OnClientStarted;
-        public UnityEvent OnServerStopped;
-        public UnityEvent OnClientStopped;
-        public UnityEvent OnHostStopped;
-        [Obsolete("No longer used.")]
-        public UnityEvent OnRegisterServerMessages;
-        [Obsolete("No longer used.")]
-        public UnityEvent OnRegisterClientMessages;
-
-        // End
-
-
         private NetworkListServer listServer;
-
-        [FormerlySerializedAs("SteamSettings")]
-        public SteamSettings steamSettings;
 
 
         public override void Start()
         {
+            Debug.Log("NetworkManagerCustom.Start");
             base.Start();
+
             listServer = GetComponent<NetworkListServer>();
         }
+
 
         /// <summary>
         /// Adding custom handlers invoked when they receive messages on the server.
         /// </summary>
         public override void OnStartServer()
         {
-            OnServerStarted.Invoke();
+            Debug.Log("NetworkManagerCustom.OnStartServer");
             base.OnStartServer();
 
             NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
         }
-
-        public override void OnStartHost()
-        { OnHostStarted.Invoke(); }
-
-        public override void OnStartClient()
-        {
-            OnClientStarted.Invoke();
-            networkSceneName = "";
-        }
-        public override void OnStopClient()
-        { OnClientStopped.Invoke(); }
-        public override void OnStopHost()
-        { OnHostStopped.Invoke(); }
 
         /// <summary>
         /// Starts initializing and connecting to a game. Depends on the selected network mode.
         /// </summary>
         public static IEnumerator StartMatch()
         {
-            Debug.Log("StartMatch Start");
-
+            Debug.Log("NetworkManagerCustom.StartMatch");
             //add a filter attribute considering the selected game mode on the matchmaker as well
+
+            Debug.Log("singleton = " + (singleton as NetworkManagerCustom).listServer);
+
             if ((singleton as NetworkManagerCustom).listServer != null)
             {
                 Debug.Log("NetworkManagerCustom.StartMatch ListServer exists");
@@ -109,9 +75,6 @@ namespace Errantastra
             }
 
             singleton.StartClient();
-
-            Debug.Log("StartMatch End");
-
         }
 
         /// <summary>
@@ -120,8 +83,7 @@ namespace Errantastra
         /// </summary>
         public override void OnClientDisconnect(NetworkConnection conn)
         {
-            Debug.Log("OnClientDisconnect");
-
+            Debug.Log("NetworkManagerCustom.OnClientDisconnect");
             //do not switch scenes automatically when the game over screen is being shown already
             if (GameManager.GetInstance() != null && GameManager.GetInstance().ui.gameOverMenu.activeInHierarchy)
                 return;
@@ -132,25 +94,17 @@ namespace Errantastra
             //switch from the online to the offline scene after connection is closed
             if (!NetworkManager.IsSceneActive(SceneManager.GetSceneByBuildIndex(0).name))
             {
-                Debug.Log("OnClientDIsconnect Here 1");
                 StopHost();
                 SceneManager.LoadScene(0);
             }
             else
-            {
-                Debug.Log("OnClientDIsconnect Here 1");
                 CreateMatch();
-
-            }
-
-            Debug.Log("OnClientDisconnect End");
-
         }
 
         //creates a new match with default values
         void CreateMatch()
         {
-            Debug.Log("CreateMatch Start");
+            Debug.Log("NetworkManagerCustom.CreateMatch");
             int gameMode = PlayerPrefs.GetInt(PrefsKeys.gameMode);
             //load the online scene randomly out of all available scenes for the selected game mode
             //we are checking for a naming convention here, if a scene starts with the game mode abbreviation
@@ -184,9 +138,6 @@ namespace Errantastra
 
             //start hosting the match
             StartHost();
-
-            Debug.Log("CreateMatch End");
-
         }
 
         /// <summary>
@@ -207,9 +158,6 @@ namespace Errantastra
                     conn.Send(GetJoinMessage());
 	            }
 	        }
-
-            Debug.Log("NetworkManagerCustom.OnClientConnect End");
-
         }
 
         /// <summary>
@@ -224,7 +172,7 @@ namespace Errantastra
             if (string.IsNullOrEmpty(message.playerName))
             {
                 if (LogFilter.Debug) Debug.Log("OnServerAddPlayer called with empty player name!");
-                //return;
+                return;
             }
       
             //read prefab index to spawn out of the JoinMessage the client sent along with its request
@@ -235,20 +183,19 @@ namespace Errantastra
             playerObj = playerPrefab;
 
             //get the team value for this player
-            int teamIndex = GameManager.GetInstance().GetTeamIndex();
+            int teamIndex = GameManager.GetInstance().GetTeamFill();
             //get spawn position for this team and instantiate the player there
-            Vector3 startPos = GameManager.GetInstance().GetSpawnPosition();
+            Vector3 startPos = GameManager.GetInstance().GetSpawnPosition(teamIndex);
 	        playerObj = (GameObject)Instantiate(playerObj, startPos, Quaternion.identity);
             
             //assign name (also in JoinMessage) and team to Player component
             Player p = playerObj.GetComponent<Player>();
-            p.AddName(message.playerName);
+            p.myName = message.playerName;
             p.teamIndex = teamIndex;
-            Debug.Log(p.myName + " is on Team " + p.teamIndex);
 
             //update the game UI to correctly display the increased team size
-            //GameManager.GetInstance().size[p.teamIndex]++;
-            //GameManager.GetInstance().ui.OnTeamSizeChanged(p.teamIndex, 0, 0);
+            GameManager.GetInstance().size[p.teamIndex]++;
+            GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_ADD, p.teamIndex, 0, 0);
 
             //finally map the player gameobject to the connection requesting it
 	        NetworkServer.AddPlayerForConnection(conn, playerObj);
@@ -257,10 +204,7 @@ namespace Errantastra
             {
                 NetworkListServer.UpdatePlayerCount(NetworkServer.connections.Count);
             }
-
-            Debug.Log("NetworkManagerCustom.OnServerAddPlayer End");
-
-        }
+	    }
 
 
         /// <summary>
@@ -278,7 +222,7 @@ namespace Errantastra
             if (GameManager.GetInstance().size.Count >= p.teamIndex)
             {
                 GameManager.GetInstance().size[p.teamIndex]--;
-                GameManager.GetInstance().ui.OnTeamSizeChanged(p.teamIndex, 0, 0);
+                GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_REMOVEAT, p.teamIndex, 0, 0);
             }
 
             base.OnServerDisconnect(conn);
@@ -286,9 +230,20 @@ namespace Errantastra
             {
                 NetworkListServer.UpdatePlayerCount(NetworkServer.connections.Count);
             }
-
-            Debug.Log("NetworkManagerCustom.OnServerDisconnect End");
-
+        }
+        
+        
+        /// <summary>
+        /// Override for the callback received when a client disconnected.
+        /// Eventual cleanup of internal high level API UNET variables.
+        /// </summary>
+        public override void OnStopClient()
+        {
+            Debug.Log("NetworkManagerCustom.OnStopClient");
+            //because we are not using the automatic scene switching and cleanup by Unity Networking,
+            //the current network scene is still set to the online scene even after disconnecting.
+            //so to clean that up for internal reasons, we simply set it to an empty string here
+            networkSceneName = "";
         }
 
 
@@ -298,7 +253,6 @@ namespace Errantastra
         public override void OnStopServer()
         {
             Debug.Log("NetworkManagerCustom.OnStopServer");
-            OnServerStopped.Invoke();
             NetworkServer.UnregisterHandler<JoinMessage>();
 
             if (listServer != null)
@@ -313,13 +267,7 @@ namespace Errantastra
         {
             Debug.Log("NetworkManagerCustom.GetJoinMessage");
             JoinMessage message = new JoinMessage();
-            try
-            {
-                message.playerName = steamSettings.client.user.DisplayName;
-            } catch
-            {
-                message.playerName = "Player" + UnityEngine.Random.Range(0, 10).ToString();
-            }
+            message.playerName = PlayerPrefs.GetString(PrefsKeys.playerName);
             return message;
         }
 	}

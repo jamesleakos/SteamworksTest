@@ -25,11 +25,6 @@ namespace HeathenEngineering.SteamApi.Networking.Demo
         public Button quickMatchButton;
         public Text quickMatchLabel;
 
-        private void Start()
-        {
-            Debug.Log("FindMatchButton found " + steamSettings.client.user.DisplayName);
-        }
-
         void Update()
         {
             quickMatchButton.interactable = !lobbySettings.Manager.IsSearching && !lobbySettings.Manager.IsQuickSearching;
