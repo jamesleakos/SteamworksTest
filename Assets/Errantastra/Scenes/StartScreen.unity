@@ -1372,7 +1372,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 253577533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f43c94833eabf46a621802d31e7f2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 98c5c4e07f5e01b448e36c86b2711fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
@@ -1394,8 +1394,7 @@ MonoBehaviour:
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs:
-  - {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e, type: 3}
+  spawnPrefabs: []
   OnHostStarted:
     m_PersistentCalls:
       m_Calls:
@@ -1412,13 +1411,46 @@ MonoBehaviour:
         m_CallState: 2
   OnServerStarted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClientStarted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnServerStopped:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClientStopped:
     m_PersistentCalls:
       m_Calls: []
@@ -1431,7 +1463,6 @@ MonoBehaviour:
   OnRegisterClientMessages:
     m_PersistentCalls:
       m_Calls: []
-  steamSettings: {fileID: 0}
 --- !u!114 &253577538
 MonoBehaviour:
   m_ObjectHideFlags: 0
