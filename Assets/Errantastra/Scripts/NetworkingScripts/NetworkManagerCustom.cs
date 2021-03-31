@@ -13,6 +13,7 @@ using Mirror;
 using HeathenEngineering.SteamApi.Networking;
 using HeathenEngineering.SteamApi.Foundation;
 using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 
 
@@ -24,6 +25,22 @@ namespace Errantastra
     /// </summary>
 	public class NetworkManagerCustom : NetworkManager
     {
+        // from Heathen Custom Network Manager
+
+        public UnityEvent OnHostStarted;
+        public UnityEvent OnServerStarted;
+        public UnityEvent OnClientStarted;
+        public UnityEvent OnServerStopped;
+        public UnityEvent OnClientStopped;
+        public UnityEvent OnHostStopped;
+        [Obsolete("No longer used.")]
+        public UnityEvent OnRegisterServerMessages;
+        [Obsolete("No longer used.")]
+        public UnityEvent OnRegisterClientMessages;
+
+        // End
+
+
         private NetworkListServer listServer;
 
         [FormerlySerializedAs("SteamSettings")]
@@ -41,10 +58,24 @@ namespace Errantastra
         /// </summary>
         public override void OnStartServer()
         {
+            OnServerStarted.Invoke();
             base.OnStartServer();
 
             NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
         }
+
+        public override void OnStartHost()
+        { OnHostStarted.Invoke(); }
+
+        public override void OnStartClient()
+        {
+            OnClientStarted.Invoke();
+            networkSceneName = "";
+        }
+        public override void OnStopClient()
+        { OnClientStopped.Invoke(); }
+        public override void OnStopHost()
+        { OnHostStopped.Invoke(); }
 
         /// <summary>
         /// Starts initializing and connecting to a game. Depends on the selected network mode.
@@ -262,25 +293,12 @@ namespace Errantastra
 
 
         /// <summary>
-        /// Override for the callback received when a client disconnected.
-        /// Eventual cleanup of internal high level API UNET variables.
-        /// </summary>
-        public override void OnStopClient()
-        {
-            Debug.Log("NetworkManagerCustom.OnStopClient");
-            //because we are not using the automatic scene switching and cleanup by Unity Networking,
-            //the current network scene is still set to the online scene even after disconnecting.
-            //so to clean that up for internal reasons, we simply set it to an empty string here
-            networkSceneName = "";
-        }
-
-
-        /// <summary>
         /// Override for the callback received when the server shut down.
         /// </summary>
         public override void OnStopServer()
         {
             Debug.Log("NetworkManagerCustom.OnStopServer");
+            OnServerStopped.Invoke();
             NetworkServer.UnregisterHandler<JoinMessage>();
 
             if (listServer != null)

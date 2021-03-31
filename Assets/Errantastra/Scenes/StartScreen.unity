@@ -1396,6 +1396,30 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e, type: 3}
+  OnHostStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHostStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRegisterServerMessages:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRegisterClientMessages:
+    m_PersistentCalls:
+      m_Calls: []
   steamSettings: {fileID: 0}
 --- !u!114 &253577538
 MonoBehaviour:
@@ -3343,6 +3367,30 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e, type: 3}
+  OnHostStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHostStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRegisterServerMessages:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRegisterClientMessages:
+    m_PersistentCalls:
+      m_Calls: []
   steamSettings: {fileID: 11400000, guid: e56f48543a769984c897a8b4ee49b69e, type: 2}
 --- !u!114 &826348232
 MonoBehaviour:
