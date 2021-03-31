@@ -1,5 +1,6 @@
 
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 #if UNITY_ADS
@@ -33,22 +34,21 @@ namespace Errantastra
         /// </summary>
         public UIGame ui;
         
-        /// <summary>
-        /// Definition of playing teams with additional properties.
-        /// </summary>
-        public Team[] teams;
+        public List<Team> teams = new List<Team>();
+
+        public List<Transform> spawns = new List<Transform>();
 
         /// <summary>
         /// Networked list storing team fill for each team.
         /// E.g. if size[0] = 2, there are two players in team 0.
         /// </summary>
-        public SyncListInt size = new SyncListInt();
+        public SyncList<int> size = new SyncList<int>();
 
         /// <summary>
         /// Networked list storing team scores for each team.
         /// E.g. if score[0] = 2, team 0 scored 2 points.
         /// </summary>
-        public SyncListInt score = new SyncListInt();
+        public SyncList<int> score = new SyncList<int>();
 
         /// <summary>
         /// The maximum amount of kills to reach before ending the game.
@@ -98,9 +98,9 @@ namespace Errantastra
         public override void OnStartServer()
         {
             //should execute only on the initial master
-            if(size.Count != teams.Length)
+            if(size.Count != teams.Count)
             {
-                for(int i = 0; i < teams.Length; i++)
+                for(int i = 0; i < teams.Count; i++)
                 {
                     size.Add(0);
                     score.Add(0);
@@ -128,8 +128,8 @@ namespace Errantastra
             size.Callback += ui.OnTeamSizeChanged;
             score.Callback += ui.OnTeamScoreChanged;
             //call the hooks manually for the first time, for each team
-            for (int i = 0; i < teams.Length; i++) ui.OnTeamSizeChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
-            for(int i = 0; i < teams.Length; i++) ui.OnTeamScoreChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
+            for (int i = 0; i < teams.Count; i++) ui.OnTeamSizeChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
+            for(int i = 0; i < teams.Count; i++) ui.OnTeamScoreChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
         }
 
 
@@ -153,7 +153,7 @@ namespace Errantastra
 
             int min = size[0];
             //loop over teams to find the lowest fill
-            for(int i = 0; i < teams.Length; i++)
+            for(int i = 0; i < teams.Count; i++)
             {
                 //if fill is lower than the previous value
                 //store new fill and team for next iteration
@@ -174,29 +174,29 @@ namespace Errantastra
         /// </summary>
         public Vector3 GetSpawnPosition(int teamIndex)
         {
-            //init variables
-            Vector3 pos = teams[teamIndex].spawn.position;
-            BoxCollider col = teams[teamIndex].spawn.GetComponent<BoxCollider>();
+            float furthestDistance = 0;
+            Transform furthestSpawn = spawns[0];
 
-            if(col != null)
+            var players = GameObject.FindObjectsOfType<Player>();
+            if (players.Length == 0) return furthestSpawn.position;
+
+            foreach (var spawn in spawns)
             {
-                //find a position within the box collider range, first set fixed y position
-                //the counter determines how often we are calculating a new position if out of range
-                pos.y = col.transform.position.y;
-                int counter = 10;
-                
-                //try to get random position within collider bounds
-                //if it's not within bounds, do another iteration
-                do
+                float closestPlayer = Mathf.Infinity;
+                foreach (var player in players)
                 {
-                    pos.x = UnityEngine.Random.Range(col.bounds.min.x, col.bounds.max.x);
-                    pos.z = UnityEngine.Random.Range(col.bounds.min.z, col.bounds.max.z);
-                    counter--;
+                    var distance = (player.gameObject.transform.position - spawn.position).magnitude;
+                    if (distance < closestPlayer) closestPlayer = distance;
                 }
-                while(!col.bounds.Contains(pos) && counter > 0);
+
+                if (closestPlayer > furthestDistance)
+                {
+                    furthestDistance = closestPlayer;
+                    furthestSpawn = spawn;
+                }
             }
-            
-            return pos;
+
+            return furthestSpawn.position;
         }
         
         /// <summary>
@@ -246,7 +246,7 @@ namespace Errantastra
             bool isOver = false;
             
             //loop over teams to find the highest score
-            for(int i = 0; i < teams.Length; i++)
+            for(int i = 0; i < teams.Count; i++)
             {
                 //score is greater or equal to max score,
                 //which means the game is finished

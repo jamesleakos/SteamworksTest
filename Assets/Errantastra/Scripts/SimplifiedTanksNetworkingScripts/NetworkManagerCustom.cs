@@ -267,7 +267,7 @@ namespace Errantastra
         {
             Debug.Log("NetworkManagerCustom.GetJoinMessage");
             JoinMessage message = new JoinMessage();
-            message.playerName = PlayerPrefs.GetString(PrefsKeys.playerName);
+            message.playerName = "Player" + UnityEngine.Random.Range(0,10000);
             return message;
         }
 	}

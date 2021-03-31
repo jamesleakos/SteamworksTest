@@ -29,6 +29,8 @@ namespace Errantastra
         [SyncVar]
         public string myName;
 
+        public TMP_Text nameText;
+
         /// <summary>
         /// Team value assigned by the server.
         /// </summary>

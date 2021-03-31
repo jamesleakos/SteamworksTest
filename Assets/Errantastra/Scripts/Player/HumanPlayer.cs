@@ -217,6 +217,8 @@ namespace Errantastra {
             {
                 if (hp.holdingSpear) hp.LoadSpear();
             }
+
+            CmdSpearStart();
         }
 
         protected override void Start()
@@ -229,9 +231,7 @@ namespace Errantastra {
             } else
             {
                 networkedSpearPrefab = networkManager.spawnPrefabs.Find(x => x.name == "NetworkedSpear");
-            }
-
-            CmdSpearStart();
+            }            
         }
 
         protected override void Update()
@@ -782,7 +782,7 @@ namespace Errantastra {
             attackingState = AttackingState.notAttacking;
             takingAction = false;
 
-            CmdEndAction();
+            if (isLocalPlayer) CmdEndAction();
         }
 
         #endregion
@@ -854,8 +854,13 @@ namespace Errantastra {
             spearClone.GetComponent<Weapon>().myPlayer = this;
         }
 
+        public void ReleaseSpear()
+        {
+            if (isLocalPlayer) CmdReleaseSpear();
+        }
+
         [Command]
-        public void CmdReleaseSpear()
+        private void CmdReleaseSpear()
         {
             holdingSpear = false;
             foreach (Transform s in hand)

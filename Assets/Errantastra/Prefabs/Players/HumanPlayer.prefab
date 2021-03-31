@@ -17,6 +17,9 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 512
+  myName: 
+  nameText: {fileID: 1234343757927092532}
+  teamIndex: 0
   bodyAndWeapons: {fileID: 8044612609080278996}
   bodyAndWeaponsRotation: {x: 0, y: 0, z: 0, w: 0}
   remoteRotationSpeed: 30
@@ -34,8 +37,6 @@ MonoBehaviour:
   lobbySettings: {fileID: 11400000, guid: aadb3480c593d36468d3cd0a0d427b77, type: 2}
   authorityUser: {fileID: 0}
   steamId: 0
-  myName: 
-  teamIndex: 0
   animator: {fileID: 7271643152800728660}
   animationState: 0
   shield: 0
@@ -45,6 +46,7 @@ MonoBehaviour:
     type: 3}
   spearPrefab: {fileID: 8867412204619696729, guid: 08d24568fb03693468f1bdeece7e1c9a,
     type: 3}
+  spearCooldownTime: 2
 --- !u!61 &4128753635117000395
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -85,8 +87,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayer: {fileID: 3948966629963419180}
   hitClip: {fileID: 0}
-  tip: {fileID: 0}
-  back: {fileID: 0}
   weaponType: 1
   movementState: 0
 --- !u!1001 &755564415462274229
@@ -401,3 +401,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 755564415462274229}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1234343757927092532 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1971741895020963201, guid: f30ad63695c27504b8c2aa87564a6ccc,
+    type: 3}
+  m_PrefabInstance: {fileID: 755564415462274229}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
