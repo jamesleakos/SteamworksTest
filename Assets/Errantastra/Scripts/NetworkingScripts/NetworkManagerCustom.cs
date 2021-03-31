@@ -10,6 +10,11 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using Mirror;
+using HeathenEngineering.SteamApi.Networking;
+using HeathenEngineering.SteamApi.Foundation;
+using UnityEngine.Serialization;
+
+
 
 namespace Errantastra
 {
@@ -21,41 +26,24 @@ namespace Errantastra
     {
         private NetworkListServer listServer;
 
+        [FormerlySerializedAs("SteamSettings")]
+        public SteamSettings steamSettings;
+
 
         public override void Start()
         {
-            Debug.Log("NetworkManagerCustom.Start");
             base.Start();
-
             listServer = GetComponent<NetworkListServer>();
         }
-
 
         /// <summary>
         /// Adding custom handlers invoked when they receive messages on the server.
         /// </summary>
         public override void OnStartServer()
         {
-            Debug.Log("NetworkManagerCustom.OnStartServer");
-            spawnPrefabs.Clear();
-            spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
             base.OnStartServer();
 
             NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
-        }
-
-        public override void OnStartClient()
-        {
-            spawnPrefabs.Clear();
-            spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
-
-            ClientScene.ClearSpawners();
-
-            foreach (var prefab in spawnPrefabs)
-            {
-                ClientScene.RegisterPrefab(prefab);
-            }
-            base.OnStartClient();
         }
 
         /// <summary>
@@ -63,11 +51,7 @@ namespace Errantastra
         /// </summary>
         public static IEnumerator StartMatch()
         {
-            Debug.Log("NetworkManagerCustom.StartMatch");
             //add a filter attribute considering the selected game mode on the matchmaker as well
-
-            Debug.Log("singleton = " + (singleton as NetworkManagerCustom).listServer);
-
             if ((singleton as NetworkManagerCustom).listServer != null)
             {
                 Debug.Log("NetworkManagerCustom.StartMatch ListServer exists");
@@ -100,7 +84,6 @@ namespace Errantastra
         /// </summary>
         public override void OnClientDisconnect(NetworkConnection conn)
         {
-            Debug.Log("NetworkManagerCustom.OnClientDisconnect");
             //do not switch scenes automatically when the game over screen is being shown already
             if (GameManager.GetInstance() != null && GameManager.GetInstance().ui.gameOverMenu.activeInHierarchy)
                 return;
@@ -121,7 +104,6 @@ namespace Errantastra
         //creates a new match with default values
         void CreateMatch()
         {
-            Debug.Log("NetworkManagerCustom.CreateMatch");
             int gameMode = PlayerPrefs.GetInt(PrefsKeys.gameMode);
             //load the online scene randomly out of all available scenes for the selected game mode
             //we are checking for a naming convention here, if a scene starts with the game mode abbreviation
@@ -189,7 +171,7 @@ namespace Errantastra
             if (string.IsNullOrEmpty(message.playerName))
             {
                 if (LogFilter.Debug) Debug.Log("OnServerAddPlayer called with empty player name!");
-                return;
+                //return;
             }
       
             //read prefab index to spawn out of the JoinMessage the client sent along with its request
@@ -207,7 +189,7 @@ namespace Errantastra
             
             //assign name (also in JoinMessage) and team to Player component
             Player p = playerObj.GetComponent<Player>();
-            p.myName = message.playerName;
+            p.AddName(message.playerName);
             p.teamIndex = teamIndex;
             Debug.Log(p.myName + " is on Team " + p.teamIndex);
 
@@ -285,7 +267,13 @@ namespace Errantastra
         {
             Debug.Log("NetworkManagerCustom.GetJoinMessage");
             JoinMessage message = new JoinMessage();
-            message.playerName = PlayerPrefs.GetString(PrefsKeys.playerName);
+            try
+            {
+                message.playerName = steamSettings.client.user.DisplayName;
+            } catch
+            {
+                message.playerName = "Player" + UnityEngine.Random.Range(0, 10).ToString();
+            }
             return message;
         }
 	}

@@ -29,6 +29,8 @@ namespace Errantastra
         [SyncVar]
         public string myName;
 
+        public TMP_Text nameText;
+
         /// <summary>
         /// Team value assigned by the server.
         /// </summary>
@@ -173,6 +175,12 @@ namespace Errantastra
             Quaternion rotation = Quaternion.RotateTowards(bodyAndWeaponsRotation, newValue, remoteRotationSpeed);
 
             bodyAndWeapons.rotation = rotation;
+        }
+
+        public void AddName (string name)
+        {
+            myName = name;
+            nameText.text = myName;
         }
 
         #endregion

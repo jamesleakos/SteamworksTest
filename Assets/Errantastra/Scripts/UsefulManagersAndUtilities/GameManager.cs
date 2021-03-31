@@ -35,7 +35,7 @@ namespace Errantastra
         /// <summary>
         /// Definition of playing teams with additional properties.
         /// </summary>
-        public List<Team> teams = new List<Team>();
+        public SyncList<Team> teams = new SyncList<Team>();
 
         public List<Transform> spawns = new List<Transform>();
 
@@ -146,14 +146,17 @@ namespace Errantastra
         
         public int GetTeamIndex()
         {
+            Debug.Log("Team count 1 = " + teams.Count.ToString());
             Team newTeam = new Team();
             newTeam.name = "Team " + (teams.Count).ToString();
             teams.Add(newTeam);
+            Debug.Log("Team count 2 = " + teams.Count.ToString());
 
             score.Add(0);
 
             //This will have to change when we have multiple teams
             size.Add(1);
+            Debug.Log("Team count 3 = " + teams.Count.ToString());
 
             return teams.Count - 1;
         }
@@ -270,7 +273,7 @@ namespace Errantastra
                 killedByName = other.myName;
                 //increase local death counter for this game
                 ui.killCounter[1].text = (int.Parse(ui.killCounter[1].text) + 1).ToString();
-                ui.killCounter[1].GetComponent<Animator>().Play("Animation");
+                //ui.killCounter[1].GetComponent<Animator>().Play("Animation");
             }
 
             //when no ad is being shown, set the death text
@@ -342,13 +345,17 @@ namespace Errantastra
     /// <summary>
     /// Defines properties of a team.
     /// </summary>
-     [System.Serializable]
+    [System.Serializable]
     public class Team
     {
         /// <summary>
         /// The name of the team shown on game over.
         /// </summary>
         public string name;
+
+        public int score;
+
+        public int size;
     }
 
 

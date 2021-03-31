@@ -129,7 +129,8 @@ namespace Errantastra {
             //Gets called when the steamId is being synced by the server
             Debug.Log("New steam ID recieved from the server: previous value = " + steamId.ToString() + " new value = " + newId.ToString());
             steamId = newId;
-            SetSteamIconData();
+            //SetSteamIconData();
+            CmdSetSteamName();
         }
 
         /// <summary>
@@ -144,8 +145,29 @@ namespace Errantastra {
 
             authorityUser = steamSettings.client.GetUserData(new CSteamID(steamId));
             //SteamIcon.LinkSteamUser(authorityUser);
-
             Debug.Log("Linking persona data for: [" + steamId.ToString() + "] " + (string.IsNullOrEmpty(authorityUser.DisplayName) ? "Unknown User" : authorityUser.DisplayName));
+        }
+
+        [Command]
+        private void CmdSetSteamName()
+        {
+            Debug.Log("Set Steam Name");
+            if (steamId == CSteamID.Nil.m_SteamID)
+            {
+                Debug.Log("Coult not find a good steam ID - returning");
+                return;
+            }
+
+            authorityUser = steamSettings.client.GetUserData(new CSteamID(steamId));
+
+            myName = authorityUser.DisplayName;
+            RpcSetSteamName();
+        }
+
+        [ClientRpc]
+        private void RpcSetSteamName()
+        {
+            nameText.text = myName;
         }
 
         /// <summary>
@@ -157,8 +179,8 @@ namespace Errantastra {
             Debug.Log("Player Controller On Start Authority has been called!");
 
             steamId = SteamUser.GetSteamID().m_SteamID;
-            SetSteamIconData();
-
+            //SetSteamIconData();
+            CmdSetSteamName();
             //Have the authority instance of this object call the server and notify it of the local users CSteamID
             CmdSetSteamId(SteamUser.GetSteamID().m_SteamID);
         }
@@ -219,6 +241,9 @@ namespace Errantastra {
             {
                 if (hp.holdingSpear) hp.LoadSpear();
             }
+
+            CmdSetSteamName();
+            CmdSpearStart();
         }
 
         protected override void Start()
@@ -232,8 +257,6 @@ namespace Errantastra {
             {
                 networkedSpearPrefab = networkManager.spawnPrefabs.Find(x => x.name == "NetworkedSpear");
             }
-
-            CmdSpearStart();
         }
 
         protected override void Update()
@@ -785,7 +808,7 @@ namespace Errantastra {
             attackingState = AttackingState.notAttacking;
             takingAction = false;
 
-            CmdEndAction();
+            if (isLocalPlayer) CmdEndAction();
         }
 
         #endregion
@@ -857,8 +880,13 @@ namespace Errantastra {
             spearClone.GetComponent<Weapon>().myPlayer = this;
         }
 
+        public void ReleaseSpear()
+        {
+            if (!isLocalPlayer) return;
+            CmdReleaseSpear();
+        }
         [Command]
-        public void CmdReleaseSpear()
+        private void CmdReleaseSpear()
         {
             holdingSpear = false;
             foreach (Transform s in hand)
