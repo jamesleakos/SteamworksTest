@@ -1396,7 +1396,7 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e, type: 3}
-  steamSettings: {fileID: 11400000, guid: e56f48543a769984c897a8b4ee49b69e, type: 2}
+  steamSettings: {fileID: 0}
 --- !u!114 &253577538
 MonoBehaviour:
   m_ObjectHideFlags: 0

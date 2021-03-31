@@ -51,6 +51,8 @@ namespace Errantastra
         /// </summary>
         public static IEnumerator StartMatch()
         {
+            Debug.Log("StartMatch Start");
+
             //add a filter attribute considering the selected game mode on the matchmaker as well
             if ((singleton as NetworkManagerCustom).listServer != null)
             {
@@ -76,6 +78,9 @@ namespace Errantastra
             }
 
             singleton.StartClient();
+
+            Debug.Log("StartMatch End");
+
         }
 
         /// <summary>
@@ -84,6 +89,8 @@ namespace Errantastra
         /// </summary>
         public override void OnClientDisconnect(NetworkConnection conn)
         {
+            Debug.Log("OnClientDisconnect");
+
             //do not switch scenes automatically when the game over screen is being shown already
             if (GameManager.GetInstance() != null && GameManager.GetInstance().ui.gameOverMenu.activeInHierarchy)
                 return;
@@ -94,16 +101,25 @@ namespace Errantastra
             //switch from the online to the offline scene after connection is closed
             if (!NetworkManager.IsSceneActive(SceneManager.GetSceneByBuildIndex(0).name))
             {
+                Debug.Log("OnClientDIsconnect Here 1");
                 StopHost();
                 SceneManager.LoadScene(0);
             }
             else
+            {
+                Debug.Log("OnClientDIsconnect Here 1");
                 CreateMatch();
+
+            }
+
+            Debug.Log("OnClientDisconnect End");
+
         }
 
         //creates a new match with default values
         void CreateMatch()
         {
+            Debug.Log("CreateMatch Start");
             int gameMode = PlayerPrefs.GetInt(PrefsKeys.gameMode);
             //load the online scene randomly out of all available scenes for the selected game mode
             //we are checking for a naming convention here, if a scene starts with the game mode abbreviation
@@ -137,6 +153,9 @@ namespace Errantastra
 
             //start hosting the match
             StartHost();
+
+            Debug.Log("CreateMatch End");
+
         }
 
         /// <summary>
@@ -157,6 +176,9 @@ namespace Errantastra
                     conn.Send(GetJoinMessage());
 	            }
 	        }
+
+            Debug.Log("NetworkManagerCustom.OnClientConnect End");
+
         }
 
         /// <summary>
@@ -204,7 +226,10 @@ namespace Errantastra
             {
                 NetworkListServer.UpdatePlayerCount(NetworkServer.connections.Count);
             }
-	    }
+
+            Debug.Log("NetworkManagerCustom.OnServerAddPlayer End");
+
+        }
 
 
         /// <summary>
@@ -230,9 +255,12 @@ namespace Errantastra
             {
                 NetworkListServer.UpdatePlayerCount(NetworkServer.connections.Count);
             }
+
+            Debug.Log("NetworkManagerCustom.OnServerDisconnect End");
+
         }
-        
-        
+
+
         /// <summary>
         /// Override for the callback received when a client disconnected.
         /// Eventual cleanup of internal high level API UNET variables.
