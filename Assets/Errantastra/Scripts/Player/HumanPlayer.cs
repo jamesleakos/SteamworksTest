@@ -478,7 +478,7 @@ namespace Errantastra {
             {
                 //set next update timestamp and send to server
                 nextRotate = Time.time + sendRate;
-                if (isClient) CmdRotateHead(quaternion);
+                if (isLocalPlayer) CmdRotateHead(quaternion);
             }
         }
 
