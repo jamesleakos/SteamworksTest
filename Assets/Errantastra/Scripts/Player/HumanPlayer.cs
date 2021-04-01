@@ -206,7 +206,7 @@ namespace Errantastra {
             //    renderers[i].material = team.material;
 
             //set name in label
-            //label.text = myName;
+            nameText.text = myName;
 
             OnShieldChange(0, shield);
         }
