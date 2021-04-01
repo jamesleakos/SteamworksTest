@@ -18,7 +18,7 @@ namespace Errantastra {
         // START VARIABLE REGION
 
         #region Steamworks Stuff
-
+        private bool steamOff = false;
         public SteamSettings steamSettings;
         [FormerlySerializedAs("LobbySettings")]
         public SteamworksLobbySettings lobbySettings;
@@ -129,25 +129,35 @@ namespace Errantastra {
             //Gets called when the steamId is being synced by the server
             Debug.Log("New steam ID recieved from the server: previous value = " + steamId.ToString() + " new value = " + newId.ToString());
             steamId = newId;
-            SetSteamIconData();
+            SetSteamName();
         }
 
         /// <summary>
         /// This is called when the SteamId updates for this user
         /// The HandleSteamIdUpdate method calls it and that method is called by the network system when the steamId field is updated.
         /// </summary>
-        private void SetSteamIconData()
+        private void SetSteamName()
         {
             //If its an invalid ID dont bother doign anything
             if (steamId == CSteamID.Nil.m_SteamID)
                 return;
 
             authorityUser = steamSettings.client.GetUserData(new CSteamID(steamId));
-            //SteamIcon.LinkSteamUser(authorityUser);
+            CmdSetSteamName(authorityUser.DisplayName);
 
             Debug.Log("Linking persona data for: [" + steamId.ToString() + "] " + (string.IsNullOrEmpty(authorityUser.DisplayName) ? "Unknown User" : authorityUser.DisplayName));
         }
-
+        [Command]
+        public void CmdSetSteamName (string toName)
+        {
+            myName = toName;
+            RpcNameSteamPlayer(myName);
+        }
+        [ClientRpc]
+        public void RpcNameSteamPlayer(string toName)
+        {
+            nameText.text = toName;
+        }
         /// <summary>
         /// Only called on the client that has authority over this behaviour
         /// </summary>
@@ -155,11 +165,17 @@ namespace Errantastra {
         {
             Debug.Log("Player Controller On Start Authority has been called!");
 
+            if (steamOff)
+            {
+                CmdNamePlayer();
+                return;
+            }
             steamId = SteamUser.GetSteamID().m_SteamID;
-            SetSteamIconData();
 
             //Have the authority instance of this object call the server and notify it of the local users CSteamID
             CmdSetSteamId(SteamUser.GetSteamID().m_SteamID);
+
+            SetSteamName();
         }
 
         [Command(channel = 0)]
@@ -180,7 +196,7 @@ namespace Errantastra {
         public override void OnStartClient()
         {
             //get corresponding team and colorize renderers in team color
-            Team team = GameManager.GetInstance().teams[teamIndex];
+            //Team team = GameManager.GetInstance().teams[teamIndex];
             // probably need to assign some color or something here
 
 
@@ -290,6 +306,19 @@ namespace Errantastra {
                         break;
                 }
             }
+        }
+
+        [Command]
+        private void CmdNamePlayer ()
+        {
+            myName = "Player " + UnityEngine.Random.Range(0, 10000);
+            RpcNamePlayer(myName);
+        }
+
+        [ClientRpc]
+        private void RpcNamePlayer (string toName)
+        {
+            nameText.text = toName;
         }
 
         #endregion
@@ -606,7 +635,7 @@ namespace Errantastra {
                 if (this != GameManager.GetInstance().localPlayer && killedBy == GameManager.GetInstance().localPlayer.gameObject)
                 {
                     GameManager.GetInstance().ui.killCounter[0].text = (int.Parse(GameManager.GetInstance().ui.killCounter[0].text) + 1).ToString();
-                    GameManager.GetInstance().ui.killCounter[0].GetComponent<Animator>().Play("Animation");
+                    //GameManager.GetInstance().ui.killCounter[0].GetComponent<Animator>().Play("Animation");
                 }
             }
 
@@ -615,7 +644,7 @@ namespace Errantastra {
                 //send player back to the team area, this will get overwritten by the exact position from the client itself later on
                 //we just do this to avoid players "popping up" from the position they died and then teleporting to the team area instantly
                 //this is manipulating the internal PhotonTransformView cache to update the networkPosition variable
-                transform.position = GameManager.GetInstance().GetSpawnPosition(teamIndex);
+                transform.position = GameManager.GetInstance().GetSpawnPosition().position;
             }
 
             //further changes only affect the local client
@@ -655,7 +684,7 @@ namespace Errantastra {
             mainCamera.GetComponent<FollowTarget>().target = gameObject.transform;
 
             //get team area and reposition it there
-            transform.position = GameManager.GetInstance().GetSpawnPosition(teamIndex);
+            transform.position = GameManager.GetInstance().GetSpawnPosition().position;
         }
 
         /// <summary>

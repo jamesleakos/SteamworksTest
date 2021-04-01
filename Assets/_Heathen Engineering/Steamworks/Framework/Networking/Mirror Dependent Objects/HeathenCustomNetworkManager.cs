@@ -4,8 +4,10 @@
 
 #if !DISABLESTEAMWORKS && MIRROR
 using Mirror;
+using UnityEngine;
 using System;
 using UnityEngine.Events;
+using Errantastra;
 
 namespace HeathenEngineering.SteamApi.Networking
 {
@@ -37,6 +39,20 @@ namespace HeathenEngineering.SteamApi.Networking
         { OnClientStopped.Invoke(); }
         public override void OnStopHost()
         { OnHostStopped.Invoke(); }
+
+        public override void OnServerAddPlayer (NetworkConnection conn)
+        {
+            Transform startPos = GameManager.GetInstance().GetSpawnPosition();
+            GameObject player = startPos != null
+                ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
+                : Instantiate(playerPrefab);
+            player.GetComponent<HumanPlayer>().teamIndex = GameManager.GetInstance().CreateTeam();
+            Debug.Log("Player added to team " + player.GetComponent<HumanPlayer>().teamIndex);
+            // instantiating a "Player" prefab gives it the name "Player(clone)"
+            // => appending the connectionId is WAY more useful for debugging!
+            player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
+            NetworkServer.AddPlayerForConnection(conn, player);
+        }
     }
 }
 #endif

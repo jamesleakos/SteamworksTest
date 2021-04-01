@@ -183,19 +183,19 @@ namespace Errantastra
             playerObj = playerPrefab;
 
             //get the team value for this player
-            int teamIndex = GameManager.GetInstance().GetTeamFill();
+            //int teamIndex = GameManager.GetInstance().GetTeamFill();
             //get spawn position for this team and instantiate the player there
-            Vector3 startPos = GameManager.GetInstance().GetSpawnPosition(teamIndex);
+            Vector3 startPos = GameManager.GetInstance().GetSpawnPosition().position;
 	        playerObj = (GameObject)Instantiate(playerObj, startPos, Quaternion.identity);
             
             //assign name (also in JoinMessage) and team to Player component
             Player p = playerObj.GetComponent<Player>();
             p.myName = message.playerName;
-            p.teamIndex = teamIndex;
+            //p.teamIndex = teamIndex;
 
             //update the game UI to correctly display the increased team size
-            GameManager.GetInstance().size[p.teamIndex]++;
-            GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_ADD, p.teamIndex, 0, 0);
+            //GameManager.GetInstance().size[p.teamIndex]++;
+            //GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_ADD, p.teamIndex, 0, 0);
 
             //finally map the player gameobject to the connection requesting it
 	        NetworkServer.AddPlayerForConnection(conn, playerObj);
@@ -219,11 +219,11 @@ namespace Errantastra
             Player p = conn.identity.gameObject.GetComponent<Player>();
 
             //additional check for the count, since disconnecting as a server otherwise throws an error
-            if (GameManager.GetInstance().size.Count >= p.teamIndex)
-            {
-                GameManager.GetInstance().size[p.teamIndex]--;
-                GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_REMOVEAT, p.teamIndex, 0, 0);
-            }
+            //if (GameManager.GetInstance().size.Count >= p.teamIndex)
+            //{
+            //    GameManager.GetInstance().size[p.teamIndex]--;
+            //    GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_REMOVEAT, p.teamIndex, 0, 0);
+            //}
 
             base.OnServerDisconnect(conn);
             if(listServer != null)

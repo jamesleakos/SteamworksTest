@@ -77,7 +77,7 @@ namespace Errantastra
         /// </summary>
         public void OnTeamSizeChanged(Mirror.SyncListInt.Operation op, int index, int oldValue, int newValue)
         {
-            teamSize[index].value = GameManager.GetInstance().size[index];
+            //teamSize[index].value = GameManager.GetInstance().size[index];
         }
         
 
@@ -88,8 +88,8 @@ namespace Errantastra
         /// </summary>
         public void OnTeamScoreChanged(Mirror.SyncListInt.Operation op, int index, int oldValue, int newValue)
         {
-            teamScore[index].text = GameManager.GetInstance().score[index].ToString();
-            teamScore[index].GetComponent<Animator>().Play("Animation");
+            //teamScore[index].text = GameManager.GetInstance().score[index].ToString();
+            //teamScore[index].GetComponent<Animator>().Play("Animation");
         }
       
 

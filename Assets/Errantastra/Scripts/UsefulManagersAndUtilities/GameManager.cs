@@ -34,21 +34,9 @@ namespace Errantastra
         /// </summary>
         public UIGame ui;
         
-        public List<Team> teams = new List<Team>();
+        public SyncList<Team> teams = new SyncList<Team>();
 
         public List<Transform> spawns = new List<Transform>();
-
-        /// <summary>
-        /// Networked list storing team fill for each team.
-        /// E.g. if size[0] = 2, there are two players in team 0.
-        /// </summary>
-        public SyncList<int> size = new SyncList<int>();
-
-        /// <summary>
-        /// Networked list storing team scores for each team.
-        /// E.g. if score[0] = 2, team 0 scored 2 points.
-        /// </summary>
-        public SyncList<int> score = new SyncList<int>();
 
         /// <summary>
         /// The maximum amount of kills to reach before ending the game.
@@ -97,15 +85,7 @@ namespace Errantastra
         /// </summary>
         public override void OnStartServer()
         {
-            //should execute only on the initial master
-            if(size.Count != teams.Count)
-            {
-                for(int i = 0; i < teams.Count; i++)
-                {
-                    size.Add(0);
-                    score.Add(0);
-                }
-            }
+
         }
 
 
@@ -122,11 +102,8 @@ namespace Errantastra
                 ui.Quit();
                 return;
             }
-                
-            //these callbacks are not handled reliable by UNET, but we subscribe nonetheless
-            //maybe some display updates are called twice then which isn't too bad
-            size.Callback += ui.OnTeamSizeChanged;
-            score.Callback += ui.OnTeamScoreChanged;
+
+            Debug.Log("GameManageer.OnStartClient: There are " + teams.Count.ToString() + " teams.");
             //call the hooks manually for the first time, for each team
             for (int i = 0; i < teams.Count; i++) ui.OnTeamSizeChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
             for(int i = 0; i < teams.Count; i++) ui.OnTeamScoreChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
@@ -141,44 +118,18 @@ namespace Errantastra
         public void UpdatePlayerUI ()
         {
             ui.UpdatePlayerUI();
-        }
-
-        /// <summary>
-        /// Returns the next team index a player should be assigned to.
-        /// </summary>
-        public int GetTeamFill()
-        {
-            //init variables
-            int teamNo = 0;
-
-            int min = size[0];
-            //loop over teams to find the lowest fill
-            for(int i = 0; i < teams.Count; i++)
-            {
-                //if fill is lower than the previous value
-                //store new fill and team for next iteration
-                if(size[i] < min)
-                {
-                    min = size[i];
-                    teamNo = i;
-                }
-            }
-            
-            //return index of lowest team
-            return teamNo;
-        }
-        
+        }        
         
         /// <summary>
         /// Returns a random spawn position within the team's spawn area.
         /// </summary>
-        public Vector3 GetSpawnPosition(int teamIndex)
+        public Transform GetSpawnPosition()
         {
             float furthestDistance = 0;
             Transform furthestSpawn = spawns[0];
 
             var players = GameObject.FindObjectsOfType<Player>();
-            if (players.Length == 0) return furthestSpawn.position;
+            if (players.Length == 0) return furthestSpawn;
 
             foreach (var spawn in spawns)
             {
@@ -196,9 +147,34 @@ namespace Errantastra
                 }
             }
 
-            return furthestSpawn.position;
+            return furthestSpawn;
         }
-        
+
+        [Server]
+        public int CreateTeam()
+        {
+            var newTeam = new Team();
+            newTeam.name = "Team " + (teams.Count + 1).ToString();
+            newTeam.score = 0;
+
+            teams.Add(newTeam);
+
+            RpcAddTeamOnClient(newTeam.name, newTeam.score);
+
+            return teams.Count - 1;
+        }
+
+        [ClientRpc]
+        public void RpcAddTeamOnClient(string namme, int score)
+        {
+            Debug.Log("There are " + teams.Count.ToString() + " teams now.");
+            //var newTeam = new Team();
+            //newTeam.name = namme;
+            //newTeam.score = score;
+
+            //teams.Add(newTeam);
+        }
+
         /// <summary>
         /// Adds points to the target team depending on matching game mode and score type.
         /// This allows us for granting different amount of points on different score actions.
@@ -213,8 +189,8 @@ namespace Errantastra
                     switch(scoreType)
                     {
                         case ScoreType.Kill:
-                            score[teamIndex] += 1;
-                            Debug.Log("Team " + teamIndex + " has " + score[teamIndex] + " points.");
+                            teams[teamIndex].score += 1;
+                            Debug.Log("Team " + teamIndex + " has " + teams[teamIndex].score.ToString() + " points.");
                             break;
                     }
                 break;
@@ -224,11 +200,11 @@ namespace Errantastra
                     switch(scoreType)
                     {
                         case ScoreType.Kill:
-                            score[teamIndex] += 1;
+                            teams[teamIndex].score += 1;
                             break;
 
                         case ScoreType.Capture:
-                            score[teamIndex] += 10;
+                            teams[teamIndex].score += 10;
                             break;
                     }
                 break;
@@ -250,7 +226,7 @@ namespace Errantastra
             {
                 //score is greater or equal to max score,
                 //which means the game is finished
-                if(score[i] >= maxScore)
+                if(teams[i].score >= maxScore)
                 {
                     isOver = true;
                     break;
@@ -359,19 +335,15 @@ namespace Errantastra
     /// <summary>
     /// Defines properties of a team.
     /// </summary>
-     [System.Serializable]
+    [System.Serializable]
     public class Team
     {
         /// <summary>
         /// The name of the team shown on game over.
         /// </summary>
         public string name;
-            
-        /// <summary>
-        /// The spawn point of a team in the scene. In case it has a BoxCollider
-        /// component attached, a point within the collider bounds will be used.
-        /// </summary>
-        public Transform spawn;
+
+        public int score;
     }
 
 
