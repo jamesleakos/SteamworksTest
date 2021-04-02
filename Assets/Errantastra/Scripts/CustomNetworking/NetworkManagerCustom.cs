@@ -38,7 +38,7 @@ namespace Errantastra
             Debug.Log("NetworkManagerCustom.OnStartServer");
             base.OnStartServer();
 
-            NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
+            //NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
         }
 
         /// <summary>

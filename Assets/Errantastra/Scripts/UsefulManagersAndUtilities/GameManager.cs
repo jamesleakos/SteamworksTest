@@ -169,9 +169,8 @@ namespace Errantastra
         public void AddScore(int teamIndex)
         {
             Team team = teams[teamIndex];
-            team.score = teams[teamIndex].score + 1;
+            team.score = 3;
             teams[teamIndex] = team;
-            Debug.Log(teams[teamIndex].name + " has " + teams[teamIndex].score.ToString() + " points.");
 
             RpcUpdatePlayerUI();
         }
@@ -185,6 +184,10 @@ namespace Errantastra
         [ClientRpc]
         public void RpcUpdatePlayerUI()
         {
+            foreach (var team in teams)
+            {
+                Debug.Log(team.name + " has " + team.score + " points.");
+            }
             ui.UpdatePlayerUI();
         }
 
