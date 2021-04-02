@@ -104,38 +104,6 @@ namespace Errantastra
         //creates a new match with default values
         void CreateMatch()
         {
-            Debug.Log("NetworkManagerCustom.CreateMatch");
-            int gameMode = PlayerPrefs.GetInt(PrefsKeys.gameMode);
-            //load the online scene randomly out of all available scenes for the selected game mode
-            //we are checking for a naming convention here, if a scene starts with the game mode abbreviation
-            string activeGameMode = ((GameMode)PlayerPrefs.GetInt(PrefsKeys.gameMode)).ToString();
-            List<string> matchingScenes = new List<string>();
-            for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
-            {
-                string[] scenePath = SceneUtility.GetScenePathByBuildIndex(i).Split('/');
-                if (scenePath[scenePath.Length - 1].StartsWith(activeGameMode))
-                {
-                    matchingScenes.Add(scenePath[scenePath.Length - 1].Replace(".unity", ""));
-                }
-            }
-
-            //check that your scene begins with the game mode abbreviation
-            if (matchingScenes.Count == 0)
-            {
-                Debug.LogWarning("No Scene for selected Game Mode found in Build Settings!");
-                return;
-            }
-
-            //get random scene out of available scenes and assign it as the online scene
-            Debug.Log("We have just one scene for now, but here is where we would change that. This would overwrite the dfault online scene assigned in the editor");
-            //onlineScene = matchingScenes[UnityEngine.Random.Range(0, matchingScenes.Count)];
-
-            //double check to only start matchmaking match in online mode
-            if (PlayerPrefs.GetInt(PrefsKeys.networkMode) == 0 && (singleton as NetworkManagerCustom).listServer != null)
-            {
-                (singleton as NetworkManagerCustom).listServer.gameServerTitle = gameMode.ToString();
-            }
-
             //start hosting the match
             StartHost();
         }
@@ -165,47 +133,19 @@ namespace Errantastra
         /// Nearly the same as in the UNET source OnServerAddPlayerInternal method, but reading out the message passed in,
         /// effectively handling user player prefab selection, assignment to a team and spawning it at the team area.
         /// </summary>
-	    void OnServerAddPlayer(NetworkConnection conn, JoinMessage message)
+	    public override void OnServerAddPlayer(NetworkConnection conn)
         {
-            Debug.Log("NetworkManagerCustom.OnServerAddPlayer");
-            //read the user message
-            if (string.IsNullOrEmpty(message.playerName))
-            {
-                if (LogFilter.Debug) Debug.Log("OnServerAddPlayer called with empty player name!");
-                return;
-            }
-      
-            //read prefab index to spawn out of the JoinMessage the client sent along with its request
-            //then try to get prefab of the registered spawnable prefabs in the NetworkManager inspector (Spawn Info section)
-	        GameObject playerObj = null;
-            Debug.Log("Here is where we could choose between different player prefabs");
-            //playerObj = spawnPrefabs[0];
-            playerObj = playerPrefab;
-
-            //get the team value for this player
-            //int teamIndex = GameManager.GetInstance().GetTeamFill();
-            //get spawn position for this team and instantiate the player there
-            Vector3 startPos = GameManager.GetInstance().GetSpawnPosition().position;
-	        playerObj = (GameObject)Instantiate(playerObj, startPos, Quaternion.identity);
-            
-            //assign name (also in JoinMessage) and team to Player component
-            Player p = playerObj.GetComponent<Player>();
-            p.myName = message.playerName;
-            //p.teamIndex = teamIndex;
-
-            //update the game UI to correctly display the increased team size
-            //GameManager.GetInstance().size[p.teamIndex]++;
-            //GameManager.GetInstance().ui.OnTeamSizeChanged(SyncList<int>.Operation.OP_ADD, p.teamIndex, 0, 0);
-
-            //finally map the player gameobject to the connection requesting it
-	        NetworkServer.AddPlayerForConnection(conn, playerObj);
-
-            if(listServer != null)
-            {
-                NetworkListServer.UpdatePlayerCount(NetworkServer.connections.Count);
-            }
-	    }
-
+            Transform startPos = GameManager.GetInstance().GetSpawnPosition();
+            GameObject player = startPos != null
+                ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
+                : Instantiate(playerPrefab);
+            player.GetComponent<HumanPlayer>().teamIndex = GameManager.GetInstance().CreateTeam();
+            Debug.Log("Player added to team " + player.GetComponent<HumanPlayer>().teamIndex);
+            // instantiating a "Player" prefab gives it the name "Player(clone)"
+            // => appending the connectionId is WAY more useful for debugging!
+            player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
+            NetworkServer.AddPlayerForConnection(conn, player);
+        }
 
         /// <summary>
         /// Override for the callback received on the server when a client disconnects from the game.

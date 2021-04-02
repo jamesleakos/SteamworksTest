@@ -596,7 +596,7 @@ namespace Errantastra {
             //the game is already over so don't do anything
             if (GameManager.GetInstance().IsGameOver()) return;
 
-            GameManager.GetInstance().AddScore(ScoreType.Kill, killingPlayer.teamIndex);
+            GameManager.GetInstance().AddScore(killingPlayer.teamIndex);
             //the maximum score has been reached now
             if (GameManager.GetInstance().IsGameOver())
             {

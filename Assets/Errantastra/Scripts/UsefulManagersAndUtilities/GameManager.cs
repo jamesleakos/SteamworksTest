@@ -25,11 +25,6 @@ namespace Errantastra
         public HumanPlayer localPlayer;
 
         /// <summary>
-        /// Active game mode played in the current scene.
-        /// </summary>
-        public GameMode gameMode = GameMode.TDM;
-
-        /// <summary>
         /// Reference to the UI script displaying game stats.
         /// </summary>
         public UIGame ui;
@@ -171,36 +166,12 @@ namespace Errantastra
         /// Adds points to the target team depending on matching game mode and score type.
         /// This allows us for granting different amount of points on different score actions.
         /// </summary>
-        public void AddScore(ScoreType scoreType, int teamIndex)
+        public void AddScore(int teamIndex)
         {
-            //distinguish between game mode
-            switch(gameMode)
-            {
-                //in TDM, we only grant points for killing
-                case GameMode.TDM:
-                    switch(scoreType)
-                    {
-                        case ScoreType.Kill:
-                            teams[teamIndex].score += 1;
-                            Debug.Log("Team " + teamIndex + " has " + teams[teamIndex].score.ToString() + " points.");
-                            break;
-                    }
-                break;
-
-                //in CTF, we grant points for both killing and flag capture
-                case GameMode.CTF:
-                    switch(scoreType)
-                    {
-                        case ScoreType.Kill:
-                            teams[teamIndex].score += 1;
-                            break;
-
-                        case ScoreType.Capture:
-                            teams[teamIndex].score += 10;
-                            break;
-                    }
-                break;
-            }
+            Team team = teams[teamIndex];
+            team.score = teams[teamIndex].score + 1;
+            teams[teamIndex] = team;
+            Debug.Log(teams[teamIndex].name + " has " + teams[teamIndex].score.ToString() + " points.");
 
             RpcUpdatePlayerUI();
         }
@@ -345,34 +316,5 @@ namespace Errantastra
         public string name;
 
         public int score;
-    }
-
-
-    /// <summary>
-    /// Defines the types that could grant points to players or teams.
-    /// Used in the AddScore() method for filtering.
-    /// </summary>
-    public enum ScoreType
-    {
-        Kill,
-        Capture
-    }
-
-
-    /// <summary>
-    /// Available game modes selected per scene.
-    /// Used in the AddScore() method for filtering.
-    /// </summary>
-    public enum GameMode
-    {
-        /// <summary>
-        /// Team Deathmatch
-        /// </summary>
-        TDM,
-
-        /// <summary>
-        /// Capture The Flag
-        /// </summary>
-        CTF
     }
 }
