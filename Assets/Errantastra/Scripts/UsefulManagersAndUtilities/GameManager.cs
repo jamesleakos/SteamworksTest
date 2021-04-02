@@ -168,12 +168,14 @@ namespace Errantastra
         /// </summary>
         public void AddScore(int teamIndex)
         {
-            Team team = teams[teamIndex];
-            team.score = 3;
+            Team team = new Team();
+            team.name = teams[teamIndex].name;
+            team.score = teams[teamIndex].score + 1;
             teams[teamIndex] = team;
 
-            RpcUpdatePlayerUI();
+            RpcUpdateScore(teamIndex, team.score);
         }
+        
 
         [Server]
         public void UpdatePlayerUI()
@@ -184,10 +186,13 @@ namespace Errantastra
         [ClientRpc]
         public void RpcUpdatePlayerUI()
         {
-            foreach (var team in teams)
-            {
-                Debug.Log(team.name + " has " + team.score + " points.");
-            }
+            ui.UpdatePlayerUI();
+        }
+
+        [ClientRpc]
+        public void RpcUpdateScore(int teamIndex, int newScore)
+        {
+            teams[teamIndex].score = newScore;
             ui.UpdatePlayerUI();
         }
 
