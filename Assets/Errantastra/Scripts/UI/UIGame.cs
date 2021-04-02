@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
+
 
 namespace Errantastra
 {
@@ -11,26 +13,10 @@ namespace Errantastra
     /// </summary>
     public class UIGame : MonoBehaviour
     {
-        /// <summary>
-        /// UI sliders displaying team fill for each team using absolute values.
-        /// </summary>
-        public Slider[] teamSize;
-        
-        /// <summary>
-        /// UI texts displaying kill scores for each team.
-        /// </summary>
-        public Text[] teamScore;
 
-        /// <summary>
-        /// UI texts displaying kill scores for this local player.
-        /// [0] = Kill Count, [1] = Death Count
-        /// </summary>
-        public Text[] killCounter;
+        public GameObject teamScoreBoxPrefab;
 
-        /// <summary>
-        /// Mobile crosshair aiming indicator for local player.
-        /// </summary>
-        public GameObject aimIndicator;
+        public GameObject scoreboardArea;
 
         /// <summary>
         /// UI text for indicating player death and who killed this player.
@@ -66,49 +52,44 @@ namespace Errantastra
 
         public void UpdatePlayerUI ()
         {
+            Debug.Log("Update Player UI called");
+            var teams = GameManager.GetInstance().teams;
+            while (teams.Count > scoreboardArea.GetComponentsInChildren<ScoreBox>().ToList().Count)
+            {
+                AddTeamBox("Temp", 0);
+            }
+            while (teams.Count > scoreboardArea.GetComponentsInChildren<ScoreBox>().ToList().Count)
+            {
+                Destroy(scoreboardArea.GetComponentsInChildren<ScoreBox>().ToList()[0].gameObject);
+            }
 
+            for (int i = 0; i < scoreboardArea.GetComponentsInChildren<ScoreBox>().ToList().Count; i++)
+            {
+                var box = scoreboardArea.GetComponentsInChildren<ScoreBox>().ToList()[i];
+                box.SetName(teams[i].name);
+                box.SetScore(teams[i].score);
+            }
+        }
+
+        public void AddTeamBox (string teamName, int score)
+        {
+            var go = Instantiate(teamScoreBoxPrefab) as GameObject;
+            go.transform.SetParent(scoreboardArea.transform, false);
+            go.GetComponent<ScoreBox>().SetName(teamName);
+            go.GetComponent<ScoreBox>().SetScore(score);
         }
         
-
-        /// <summary>
-        /// Method called by the SyncList operation over the Network when its content changes.
-        /// This is an implementation for changes to the team fill, updating the slider values.
-        /// Parameters: type of operation, index of team which received updates.
-        /// </summary>
-        public void OnTeamSizeChanged(Mirror.SyncListInt.Operation op, int index, int oldValue, int newValue)
+        public void OnTeamScoreChanged(int index, int newValue)
         {
-            //teamSize[index].value = GameManager.GetInstance().size[index];
-        }
-        
-
-        /// <summary>
-        /// Method called by the SyncList operation over the Network when its content changes.
-        /// This is an implementation for changes to the team score, updating the text values.
-        /// Parameters: type of operation, index of team which received updates.
-        /// </summary>
-        public void OnTeamScoreChanged(Mirror.SyncListInt.Operation op, int index, int oldValue, int newValue)
-        {
-            //teamScore[index].text = GameManager.GetInstance().score[index].ToString();
-            //teamScore[index].GetComponent<Animator>().Play("Animation");
+            
         }
       
-
-        
-        /// <summary>
-        /// Sets death text showing who killed the player in its team color.
-        /// Parameters: killer's name, killer's team
-        /// </summary>
         public void SetDeathText(string playerName, Team team)
         {
             //show killer name and colorize the name converting its team color to an HTML RGB hex value for UI markup
             deathText.text = "KILLED BY\n<color=#" + ColorUtility.ToHtmlStringRGB(Color.red) + ">" + playerName + "</color>";
         }
-        
-        
-        /// <summary>
-        /// Set respawn delay value displayed to the absolute time value received.
-        /// The remaining time value is calculated in a coroutine by GameManager.
-        /// </summary>
+
         public void SetSpawnDelay(float time)
         {                
             spawnDelayText.text = Mathf.Ceil(time) + "";

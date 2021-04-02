@@ -104,21 +104,11 @@ namespace Errantastra
             }
 
             Debug.Log("GameManageer.OnStartClient: There are " + teams.Count.ToString() + " teams.");
-            //call the hooks manually for the first time, for each team
-            for (int i = 0; i < teams.Count; i++) ui.OnTeamSizeChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
-            for(int i = 0; i < teams.Count; i++) ui.OnTeamScoreChanged(SyncListInt.Operation.OP_SET, i, 0, 0);
         }
-
-
         
         void Start()
         {
-        }
-
-        public void UpdatePlayerUI ()
-        {
-            ui.UpdatePlayerUI();
-        }        
+        }     
         
         /// <summary>
         /// Returns a random spawn position within the team's spawn area.
@@ -153,6 +143,7 @@ namespace Errantastra
         [Server]
         public int CreateTeam()
         {
+            Debug.Log("CreateTeam called");
             var newTeam = new Team();
             newTeam.name = "Team " + (teams.Count + 1).ToString();
             newTeam.score = 0;
@@ -160,12 +151,13 @@ namespace Errantastra
             teams.Add(newTeam);
 
             RpcAddTeamOnClient(newTeam.name, newTeam.score);
+            RpcUpdatePlayerUI();
 
             return teams.Count - 1;
         }
 
         [ClientRpc]
-        public void RpcAddTeamOnClient(string namme, int score)
+        public void RpcAddTeamOnClient(string name, int score)
         {
             Debug.Log("There are " + teams.Count.ToString() + " teams now.");
             //var newTeam = new Team();
@@ -210,7 +202,19 @@ namespace Errantastra
                 break;
             }
 
-            ui.OnTeamScoreChanged(SyncList<int>.Operation.OP_ADD, teamIndex, 0, 0);
+            RpcUpdatePlayerUI();
+        }
+
+        [Server]
+        public void UpdatePlayerUI()
+        {
+            RpcUpdatePlayerUI();
+        }
+
+        [ClientRpc]
+        public void RpcUpdatePlayerUI()
+        {
+            ui.UpdatePlayerUI();
         }
 
         /// <summary>
@@ -255,9 +259,6 @@ namespace Errantastra
             if (other != localPlayer)
             {
                 killedByName = other.myName;
-                //increase local death counter for this game
-                ui.killCounter[1].text = (int.Parse(ui.killCounter[1].text) + 1).ToString();
-                ui.killCounter[1].GetComponent<Animator>().Play("Animation");
             }
 
             //calculate if we should show a video ad

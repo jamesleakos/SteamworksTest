@@ -56,7 +56,7 @@ namespace Errantastra {
         private float throwingAnimLength;
         private float attackPatienceBuffer = 0.05f;
         private float endAttackTime;
-        
+
         public enum AnimationState
         {
             normalAttack,
@@ -148,7 +148,7 @@ namespace Errantastra {
             Debug.Log("Linking persona data for: [" + steamId.ToString() + "] " + (string.IsNullOrEmpty(authorityUser.DisplayName) ? "Unknown User" : authorityUser.DisplayName));
         }
         [Command]
-        public void CmdSetSteamName (string toName)
+        public void CmdSetSteamName(string toName)
         {
             myName = toName;
             RpcNameSteamPlayer(myName);
@@ -235,6 +235,13 @@ namespace Errantastra {
             }
 
             CmdSpearStart();
+            CmdUpdatePlayerUI();
+        }
+
+        [Command]
+        public void CmdUpdatePlayerUI ()
+        {
+            GameManager.GetInstance().UpdatePlayerUI();
         }
 
         protected override void Start()
@@ -628,14 +635,6 @@ namespace Errantastra {
                 {
                     senderObj = NetworkIdentity.spawned[(uint)senderId].gameObject;
                     if (senderObj != null) killedBy = senderObj;
-                }
-
-                //detect whether the current user was responsible for the kill, but not for suicide
-                //yes, that's my kill: increase local kill counter
-                if (this != GameManager.GetInstance().localPlayer && killedBy == GameManager.GetInstance().localPlayer.gameObject)
-                {
-                    GameManager.GetInstance().ui.killCounter[0].text = (int.Parse(GameManager.GetInstance().ui.killCounter[0].text) + 1).ToString();
-                    //GameManager.GetInstance().ui.killCounter[0].GetComponent<Animator>().Play("Animation");
                 }
             }
 
