@@ -546,11 +546,12 @@ namespace Errantastra {
         #region Dealing with Attack Outcomes
 
         // hit player with melee weapon (held or thrown, somewhat confusingly)
-        public void HitPlayerWithHandWeapon(HumanPlayer hitPlayer, Weapon spear)
+        public void HitPlayerWithHandWeapon(HumanPlayer hitPlayer, Weapon weapon)
         {
             if (!isServer) return;
             if (attackingState == AttackingState.notAttacking) return;
-            if (spear.weaponType == Weapon.WeaponType.spear && hitPlayer.movementState == MovementState.rolling) return;
+            if (weapon.weaponType == Weapon.WeaponType.spear && hitPlayer.movementState == MovementState.rolling) return;
+            if (weapon.weaponType == Weapon.WeaponType.spear && weapon.movementState == Weapon.MovementState.stuck) return;
             if (hitPlayer.movementState == MovementState.blocking) //&& spear.movementState == Weapon.MovementState.held)
             {
                 if (IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position,45.0f))

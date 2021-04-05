@@ -38,7 +38,7 @@ namespace Errantastra
             Debug.Log("NetworkManagerCustom.OnStartServer");
             base.OnStartServer();
 
-            //NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
+            NetworkServer.RegisterHandler<JoinMessage>(OnServerAddPlayer);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Errantastra
         /// Nearly the same as in the UNET source OnServerAddPlayerInternal method, but reading out the message passed in,
         /// effectively handling user player prefab selection, assignment to a team and spawning it at the team area.
         /// </summary>
-	    public override void OnServerAddPlayer(NetworkConnection conn)
+	    public void OnServerAddPlayer(NetworkConnection conn, JoinMessage message)
         {
             Transform startPos = GameManager.GetInstance().GetSpawnPosition();
             GameObject player = startPos != null

@@ -6,25 +6,17 @@ using UnityEngine;
 
 namespace Mirror
 {
-    /// <summary>
-    /// A class that holds writers for the different types
-    /// <para>Note that c# creates a different static variable for each type</para>
-    /// <para>This will be populated by the weaver</para>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <summary>Helper class that weaver populates with all writer types.</summary>
+    // Note that c# creates a different static variable for each type
+    // -> Weaver.ReaderWriterProcessor.InitializeReaderAndWriters() populates it
     public static class Writer<T>
     {
         public static Action<NetworkWriter, T> write;
     }
 
-    /// <summary>
-    /// Binary stream Writer. Supports simple types, buffers, arrays, structs, and nested types
-    /// <para>Use <see cref="NetworkWriterPool.GetWriter">NetworkWriter.GetWriter</see> to reduce memory allocation</para>
-    /// </summary>
+    /// <summary>Network Writer for most simple types like floats, ints, buffers, structs, etc. Use NetworkWriterPool.GetReader() to avoid allocations.</summary>
     public class NetworkWriter
     {
-        static readonly ILogger logger = LogFactory.GetLogger<NetworkWriter>();
-
         public const int MaxStringLength = 1024 * 32;
 
         // create writer immediately with it's own buffer so no one can mess with it and so that we can resize it.
@@ -37,14 +29,10 @@ namespace Mirror
         int position;
         int length;
 
-        /// <summary>
-        /// Number of bytes writen to the buffer
-        /// </summary>
+        /// <summary>Number of bytes writen to the buffer</summary>
         public int Length => length;
 
-        /// <summary>
-        /// Next position to write to the buffer
-        /// </summary>
+        /// <summary>Next position to write to the buffer</summary>
         public int Position
         {
             get => position;
@@ -55,25 +43,17 @@ namespace Mirror
             }
         }
 
-        /// <summary>
-        /// Reset both the position and length of the stream
-        /// </summary>
-        /// <remarks>
-        /// Leaves the capacity the same so that we can reuse this writer without extra allocations
-        /// </remarks>
+        /// <summary>Reset both the position and length of the stream</summary>
+        // Leaves the capacity the same so that we can reuse this writer without
+        // extra allocations
         public void Reset()
         {
             position = 0;
             length = 0;
         }
 
-        /// <summary>
-        /// Sets length, moves position if it is greater than new length
-        /// </summary>
-        /// <param name="newLength"></param>
-        /// <remarks>
+        /// <summary>Sets length, moves position if it is greater than new length</summary>
         /// Zeros out any extra length created by setlength
-        /// </remarks>
         public void SetLength(int newLength)
         {
             int oldLength = length;
@@ -111,11 +91,7 @@ namespace Mirror
             }
         }
 
-        /// <summary>
-        /// Copys buffer to new array with the size of <see cref="Length"/>
-        /// <para></para>
-        /// </summary>
-        /// <returns>all the data we have written, regardless of the current position</returns>
+        /// <summary>Copies buffer to new array of size 'Length'. Ignores 'Position'.</summary>
         public byte[] ToArray()
         {
             byte[] data = new byte[length];
@@ -123,16 +99,7 @@ namespace Mirror
             return data;
         }
 
-        /// <summary>
-        /// Create an ArraySegment using the buffer and <see cref="Length"/>
-        /// <para>
-        ///     Dont modify the NetworkWriter while using the ArraySegment as this can overwrite the bytes
-        /// </para>
-        /// <para>
-        ///     Use ToArraySegment instead of ToArray to avoid allocations
-        /// </para>
-        /// </summary>
-        /// <returns>all the data we have written, regardless of the current position</returns>
+        /// <summary>Returns allocatin-free ArraySegment which points to buffer up to 'Length' (ignores 'Position').</summary>
         public ArraySegment<byte> ToArraySegment()
         {
             return new ArraySegment<byte>(buffer, 0, length);
@@ -153,17 +120,13 @@ namespace Mirror
             position += count;
         }
 
-        /// <summary>
-        /// Writes any type that mirror supports
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
+        /// <summary>Writes any type that mirror supports. Uses weaver populated Writer(T).write.</summary>
         public void Write<T>(T value)
         {
             Action<NetworkWriter, T> writeDelegate = Writer<T>.write;
             if (writeDelegate == null)
             {
-                logger.LogError($"No writer found for {typeof(T)}. Use a type supported by Mirror or define a custom writer");
+                Debug.LogError($"No writer found for {typeof(T)}. Use a type supported by Mirror or define a custom writer");
             }
             else
             {
@@ -172,13 +135,10 @@ namespace Mirror
         }
     }
 
-
     // Mirror's Weaver automatically detects all NetworkWriter function types,
     // but they do all need to be extensions.
     public static class NetworkWriterExtensions
     {
-        static readonly ILogger logger = LogFactory.GetLogger(typeof(NetworkWriterExtensions));
-
         // cache encoding instead of creating it with BinaryWriter each time
         // 1000 readers before:  1MB GC, 30ms
         // 1000 readers after: 0.8MB GC, 18ms
@@ -288,7 +248,7 @@ namespace Mirror
         public static void WriteBytesAndSize(this NetworkWriter writer, byte[] buffer, int offset, int count)
         {
             // null is supported because [SyncVar]s might be structs with null byte[] arrays
-            // write 0 for null array, increment normal size by 1 to save bandwith
+            // write 0 for null array, increment normal size by 1 to save bandwidth
             // (using size=-1 for null would limit max size to 32kb instead of 64kb)
             if (buffer == null)
             {
@@ -451,7 +411,7 @@ namespace Mirror
             }
             else
             {
-                logger.LogWarning("NetworkWriter " + value + " has no NetworkIdentity");
+                Debug.LogWarning("NetworkWriter " + value + " has no NetworkIdentity");
                 writer.WriteUInt32(0);
             }
         }
@@ -470,7 +430,7 @@ namespace Mirror
             }
             else
             {
-                logger.LogWarning("NetworkWriter " + value + " has no NetworkIdentity");
+                Debug.LogWarning("NetworkWriter " + value + " has no NetworkIdentity");
                 writer.WriteUInt32(0);
             }
         }
