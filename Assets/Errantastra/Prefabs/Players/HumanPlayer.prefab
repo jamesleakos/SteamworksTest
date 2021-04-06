@@ -24,9 +24,9 @@ MonoBehaviour:
   bodyAndWeaponsRotation: {x: 0, y: 0, z: 0, w: 0}
   remoteRotationSpeed: 30
   killedBy: {fileID: 0}
-  blockSpeed: 2
-  walkSpeed: 4
-  runSpeed: 7
+  blockSpeed: 1
+  walkSpeed: 2
+  runSpeed: 3.5
   rollSpeed: 40
   rollTime: 0.08
   rollCoolDownTime: 1
@@ -39,6 +39,7 @@ MonoBehaviour:
   steamId: 0
   animator: {fileID: 7271643152800728660}
   animationState: 0
+  rotationSpeed: 250
   shield: 0
   holdingSpear: 0
   hand: {fileID: 2353204949964196503}
@@ -179,6 +180,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1152283884362006087, guid: f30ad63695c27504b8c2aa87564a6ccc,
+        type: 3}
+      propertyPath: syncInterval
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 1479159593259775616, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
       propertyPath: m_IsActive
@@ -247,7 +253,7 @@ PrefabInstance:
     - target: {fileID: 5135155818859062140, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
       propertyPath: m_Size.x
-      value: 0.92
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 5135155818859062140, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}

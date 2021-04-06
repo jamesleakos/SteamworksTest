@@ -83,6 +83,12 @@ namespace Errantastra {
 
         #endregion
 
+        #region Rotation
+
+        public float rotationSpeed;
+
+        #endregion
+
         #region Shield and Laser
 
         // shield and laser 
@@ -460,7 +466,11 @@ namespace Errantastra {
         
         private void PreSetMovementState(MovementState setState)
         {
-            if (movementState != setState) CmdSetMovementState(setState);
+            if (movementState != setState)
+            {
+                movementState = setState;
+                CmdSetMovementState(setState);
+            }
         }
 
         [Command]
@@ -482,7 +492,9 @@ namespace Errantastra {
             Vector2 dir = mousePosition - firePointPosition;
             dir.Normalize();
 
-            Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+            Quaternion goalRotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+
+            Quaternion rotation = Quaternion.RotateTowards(bodyAndWeapons.rotation, goalRotation, Time.deltaTime * rotationSpeed);
             bodyAndWeapons.rotation = rotation;
 
             SendRotate(rotation);
@@ -495,13 +507,14 @@ namespace Errantastra {
             dir.Normalize();
 
             Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
-            bodyAndWeapons.rotation = rotation;
+            //bodyAndWeapons.rotation = rotation;
         }
 
         private void RotateToMovementDirection(Vector2 vector2)
         {
             Quaternion finalRotation = Quaternion.Euler(0, 0, Mathf.Atan2(vector2.y, vector2.x) * Mathf.Rad2Deg);
-            Quaternion rotation = Quaternion.RotateTowards(bodyAndWeaponsRotation, finalRotation, remoteRotationSpeed);
+            Quaternion goalRotation = Quaternion.RotateTowards(bodyAndWeaponsRotation, finalRotation, remoteRotationSpeed);
+            Quaternion rotation = Quaternion.RotateTowards(bodyAndWeapons.rotation, goalRotation, Time.deltaTime * rotationSpeed);
 
             bodyAndWeapons.rotation = rotation;
 
@@ -554,7 +567,7 @@ namespace Errantastra {
             if (weapon.weaponType == Weapon.WeaponType.spear && weapon.movementState == Weapon.MovementState.stuck) return;
             if (hitPlayer.movementState == MovementState.blocking) //&& spear.movementState == Weapon.MovementState.held)
             {
-                if (IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position,45.0f))
+                if (IsLookingAtObject(hitPlayer.gameObject.transform, gameObject.transform.position,120.0f))
                 {
                     return;
                 }
@@ -807,7 +820,7 @@ namespace Errantastra {
 
         public void EndAttack(string source)
         {
-            if (!Input.GetKey(KeyCode.Mouse1) && isLocalPlayer) RotateToMouse();
+            //if (!Input.GetKey(KeyCode.Mouse1) && isLocalPlayer) RotateToMouse();
             attackingState = AttackingState.notAttacking;
             takingAction = false;
 
