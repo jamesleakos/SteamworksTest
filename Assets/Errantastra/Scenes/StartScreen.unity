@@ -594,27 +594,27 @@ PrefabInstance:
     - target: {fileID: 224176841439733122, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224176841439733122, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224176841439733122, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 224176841439733122, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 224299602010953466, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 224299602010953466, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
@@ -629,22 +629,22 @@ PrefabInstance:
     - target: {fileID: 224500540785964124, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224500540785964124, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 224530421972509348, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224530421972509348, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224530421972509348, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
@@ -654,22 +654,22 @@ PrefabInstance:
     - target: {fileID: 224553900854707820, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224553900854707820, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 224597772971110816, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224597772971110816, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224597772971110816, guid: 6b4f290bbe49a7b4fad7c91f76975bf7,
         type: 3}
@@ -1153,7 +1153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &253577534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1744,7 +1744,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &353965291
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3351,7 +3351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &826348229
 Transform:
   m_ObjectHideFlags: 0
@@ -3417,7 +3417,7 @@ MonoBehaviour:
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 755564415462163383, guid: ae2897766dd1c0140aee201a76ff9f96,
     type: 3}
-  autoCreatePlayer: 1
+  autoCreatePlayer: 0
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 6932907294134571758, guid: 1f833e31e3a2c41458c2d4336126049e, type: 3}
@@ -5351,7 +5351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1829303721
 RectTransform:
   m_ObjectHideFlags: 0

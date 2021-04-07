@@ -135,6 +135,7 @@ namespace Errantastra
         /// </summary>
 	    public void OnServerAddPlayer(NetworkConnection conn, JoinMessage message)
         {
+            Debug.Log("OnServerAddPlayer");
             Transform startPos = GameManager.GetInstance().GetSpawnPosition();
             GameObject player = startPos != null
                 ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
