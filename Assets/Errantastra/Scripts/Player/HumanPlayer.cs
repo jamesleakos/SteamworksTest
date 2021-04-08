@@ -112,7 +112,7 @@ namespace Errantastra {
         private GameObject spearClone;
 
         private HeathenCustomNetworkManager networkManager;
-        private NetworkManagerCustom testingNetworkManager;
+        private LeakosNetworkManager testingNetworkManager;
 
         public float spearCooldownTime = 2.0f;
         private float timeToReloadSpear;
@@ -255,7 +255,7 @@ namespace Errantastra {
             networkManager = GameObject.FindObjectOfType<HeathenCustomNetworkManager>();
             if (networkManager == null)
             {
-                testingNetworkManager = FindObjectOfType<NetworkManagerCustom>();
+                testingNetworkManager = FindObjectOfType<LeakosNetworkManager>();
                 networkedSpearPrefab = testingNetworkManager.spawnPrefabs.Find(x => x.name == "NetworkedSpear");
             } else
             {
@@ -559,6 +559,7 @@ namespace Errantastra {
         #region Dealing with Attack Outcomes
 
         // hit player with melee weapon (held or thrown, somewhat confusingly)
+        [ServerCallback]
         public void HitPlayerWithHandWeapon(HumanPlayer hitPlayer, Weapon weapon)
         {
             if (!isServer) return;

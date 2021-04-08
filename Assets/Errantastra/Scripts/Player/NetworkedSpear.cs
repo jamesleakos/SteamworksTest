@@ -86,13 +86,15 @@ namespace Errantastra
         [ServerCallback]
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log(collision.gameObject.name);
+            Debug.Log("Spear hit " + collision.gameObject.name);
             if (collision.tag == "Spear") return;
-            if (collision.tag == "Player")
-            {
-                var p = collision.gameObject.GetComponent<HumanPlayer>();
-                if (p == myPlayer) return;
-            }
+            if (collision.tag == "Player") return;
+            //{
+            //    var p = collision.gameObject.GetComponent<HumanPlayer>();
+            //    if (p == myPlayer) return;
+            //    Debug.Log("myPlayer = " + myPlayer + ". EnemyPlayer = " + p + "weapon = " + gameObject.GetComponent<Weapon>());
+            //    myPlayer.HitPlayerWithHandWeapon(p, gameObject.GetComponent<Weapon>());
+            //}
             StopFlying();
         }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - Spear
+  - Shield
   layers:
   - Default
   - TransparentFX

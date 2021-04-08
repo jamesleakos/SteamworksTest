@@ -138,7 +138,7 @@ namespace Errantastra
         public void Restart()
         {
             GameObject gObj = new GameObject("RestartNow");
-            gObj.AddComponent<UIRestartButton>();
+            //gObj.AddComponent<UIRestartButton>();
             DontDestroyOnLoad(gObj);
             
             Quit();
