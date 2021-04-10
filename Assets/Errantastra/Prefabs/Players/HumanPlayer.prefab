@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 256
   myName: 
   nameText: {fileID: 1234343757927092532}
   teamIndex: 0
@@ -323,22 +320,22 @@ PrefabInstance:
     - target: {fileID: 7204155208453975888, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
       propertyPath: m_BodyType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7204155208453975888, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
       propertyPath: m_CollisionDetection
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204155208453975888, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
       propertyPath: m_Interpolate
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204155208453975888, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
       propertyPath: m_Constraints
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7941861644404245927, guid: f30ad63695c27504b8c2aa87564a6ccc,
         type: 3}
