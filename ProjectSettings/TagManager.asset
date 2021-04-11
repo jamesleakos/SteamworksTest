@@ -19,9 +19,9 @@ TagManager:
   - Layer 1
   - Layer 2
   - Layer 3
-  - 
-  - 
-  - 
+  - Player Layer 1
+  - Player Layer 2
+  - Player Layer 3
   - 
   - 
   - 
@@ -43,4 +43,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Layer 1
+    uniqueID: 2280938805
+    locked: 0
+  - name: Layer 2
+    uniqueID: 1800713085
+    locked: 0
+  - name: Layer 3
+    uniqueID: 1585773395
     locked: 0

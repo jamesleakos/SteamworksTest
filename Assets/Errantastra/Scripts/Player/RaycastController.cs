@@ -10,7 +10,7 @@ namespace Errantastra
     {
         public LayerMask collisionMask;
 
-        protected const float skinWidth = .015f;
+        protected const float skinWidth = 0.1f;
         protected int horizontalRayCount = 4;
         protected int verticalRayCount = 4;
 

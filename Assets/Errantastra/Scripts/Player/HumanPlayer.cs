@@ -249,9 +249,13 @@ namespace Errantastra {
         {
             GameManager.GetInstance().UpdatePlayerUI();
         }
-
+        protected override void Awake()
+        {
+            base.Awake();
+        }
         protected override void Start()
         {
+            base.Start();
             networkManager = GameObject.FindObjectOfType<HeathenCustomNetworkManager>();
             if (networkManager == null)
             {

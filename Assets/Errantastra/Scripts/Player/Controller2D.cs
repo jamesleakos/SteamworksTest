@@ -55,8 +55,8 @@ namespace Errantastra
 
                 if (hit)
                 {
-                    Debug.Log("Hit on " + hit.transform.name + ". Tag = " + hit.transform.tag);
-                    velocity.x = (hit.distance - skinWidth) * directionX;
+                    //velocity.x = (hit.distance - skinWidth) * directionX;
+                    velocity.x = 0;
                     rayLength = hit.distance;
 
                     collisions.left = directionX == -1;
@@ -80,9 +80,8 @@ namespace Errantastra
 
                 if (hit)
                 {
-                    Debug.Log("Hit on " + hit.transform.name + ". Tag = " + hit.transform.tag);
-
-                    velocity.y = (hit.distance - skinWidth) * directionY;
+                    //velocity.y = (hit.distance - skinWidth) * directionY;
+                    velocity.y = 0;
                     rayLength = hit.distance;
 
                     collisions.below = directionY == -1;

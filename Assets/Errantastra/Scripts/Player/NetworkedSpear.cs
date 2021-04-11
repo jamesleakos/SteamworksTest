@@ -7,7 +7,7 @@ using Mirror;
 
 namespace Errantastra
 {
-    public class NetworkedSpear : Controller2D
+    public class NetworkedSpear : RaycastController
     {
         private HumanPlayer myPlayer;
 
@@ -38,6 +38,9 @@ namespace Errantastra
 
         public float maxFlightTime = 1.0f;
         private float endFlightTime;
+
+        public CollisionInfo collisions;
+
 
         /// <summary>
         /// Player gameobject that spawned this projectile.
@@ -77,25 +80,62 @@ namespace Errantastra
             }
             if (spearState == SpearState.flying && isServer)
             {
+                RaycastCollisionDetection();
                 Move(velocity * Time.deltaTime);
             }
 
             if (velocity == new Vector3(0, 0, 0) && spearState != SpearState.stuck) StopFlying();
         }
 
+        void RaycastCollisionDetection()
+        {
+            float rayLength = Mathf.Abs(velocity.x * Time.deltaTime);
+            Vector2 rayOrigin = tip.position;
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, tip.position - back.position, rayLength, collisionMask);
+
+            Debug.DrawRay(rayOrigin, (tip.position - back.position).normalized * rayLength, Color.red);
+
+            if (hit)
+            {
+                if (gameObject.transform.lossyScale.x < 0)
+                {
+                    velocity.x = -1 * hit.distance / Time.deltaTime;
+                }
+                else
+                {
+                    velocity.x = hit.distance / Time.deltaTime;
+                }
+                velocity.y = 0;
+            }
+        }
+
+        public void Move(Vector3 velocity)
+        {
+            UpdateRaycastOrigins();
+            collisions.Reset();
+            collisions.velocityOld = velocity;
+
+            if (velocity.x != 0)
+            {
+                collisions.faceDir = (int)Mathf.Sign(velocity.x);
+            }
+
+            transform.Translate(velocity);
+        }
+
         [ServerCallback]
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("Spear hit " + collision.gameObject.name);
-            if (collision.tag == "Spear") return;
-            if (collision.tag == "Player") return;
+            //Debug.Log("Spear hit " + collision.gameObject.name);
+            //if (collision.tag == "Spear") return;
+            //if (collision.tag == "Player") return;
             //{
             //    var p = collision.gameObject.GetComponent<HumanPlayer>();
             //    if (p == myPlayer) return;
             //    Debug.Log("myPlayer = " + myPlayer + ". EnemyPlayer = " + p + "weapon = " + gameObject.GetComponent<Weapon>());
             //    myPlayer.HitPlayerWithHandWeapon(p, gameObject.GetComponent<Weapon>());
             //}
-            StopFlying();
+            //StopFlying();
         }
 
         //set initial travelling velocity
@@ -141,6 +181,22 @@ namespace Errantastra
             if (!isServer) return;
             //server despawned this instance, despawn it for the network too
             NetworkServer.UnSpawn(gameObject);
+        }
+    }
+
+    public struct CollisionInfo
+    {
+        public bool above, below;
+        public bool left, right;
+
+        public Vector2 direction;
+        public Vector3 velocityOld;
+        public int faceDir;
+
+        public void Reset()
+        {
+            above = below = false;
+            left = right = false;
         }
     }
 }

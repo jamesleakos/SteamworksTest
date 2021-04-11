@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7204155208453975888}
   - component: {fileID: 7968659114175443681}
   - component: {fileID: 2564065470847468780}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
+  visible: 0
   m_AssetId: 
   hasSpawned: 0
 --- !u!114 &1152283884362006087
@@ -72,6 +73,9 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 1
+  compressRotation: 0
+  interpolateScale: 1
+  syncScale: 1
 --- !u!61 &5135155818859062140
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -163,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6382070345837295772}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 536599318213908663}
   - component: {fileID: 7941861644404245927}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: testHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +279,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3086107836862922274}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpearHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3997000122084460667}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +342,7 @@ GameObject:
   - component: {fileID: 87137769267045247}
   - component: {fileID: 5831685672487850608}
   - component: {fileID: 1971741895020963201}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4646674239582435291}
   - component: {fileID: 477532281756648463}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: testBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +557,7 @@ GameObject:
   - component: {fileID: 31047699307280891}
   - component: {fileID: 5693713557889454886}
   - component: {fileID: 297918990106073248}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7213265081301291485}
   - component: {fileID: 6726681534048453248}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: testShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +734,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7338749040040233825}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BodyAndWeapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -764,7 +768,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4507382420715706630}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
