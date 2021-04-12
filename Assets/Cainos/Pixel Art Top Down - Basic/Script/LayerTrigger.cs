@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Errantastra;
 
 namespace Cainos.PixelArtTopDown_Basic
 {
@@ -13,14 +14,21 @@ namespace Cainos.PixelArtTopDown_Basic
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            other.gameObject.layer = LayerMask.NameToLayer(layer);
+            other.gameObject.layer = LayerMask.NameToLayer("Player " + layer);
 
-            other.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayer;
-            SpriteRenderer[] srs = other.gameObject.GetComponentsInChildren<SpriteRenderer>();
+            SpriteRenderer[] srs = other.gameObject.GetComponentsInChildren<SpriteRenderer>(true);
             foreach ( SpriteRenderer sr in srs)
             {
                 sr.sortingLayerName = sortingLayer;
             }
+
+            RaycastController rc = other.gameObject.GetComponent<RaycastController>();
+            if (rc != null)
+            {
+                rc.collisionMask = LayerMask.NameToLayer(layer);
+                Debug.Log(rc.collisionMask.value);
+            }
+            else Debug.Log("No raycast controller on object with name " + other.transform.name);
         }
 
     }

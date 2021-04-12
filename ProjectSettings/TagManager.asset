@@ -53,3 +53,9 @@ TagManager:
   - name: Layer 3
     uniqueID: 1585773395
     locked: 0
+  - name: Player Layer
+    uniqueID: 831763923
+    locked: 0
+  - name: Tree Layer
+    uniqueID: 282247525
+    locked: 0

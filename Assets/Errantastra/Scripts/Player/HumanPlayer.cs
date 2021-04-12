@@ -922,6 +922,7 @@ namespace Errantastra {
             spearClone.GetComponent<Weapon>().weaponType = Weapon.WeaponType.spear;
             networkedSpearClone.GetComponent<NetworkedSpear>().spearState = NetworkedSpear.SpearState.flying;
             networkedSpearClone.GetComponent<NetworkedSpear>().StartFlying();
+            networkedSpearClone.GetComponent<NetworkedSpear>().collisionMask = collisionMask;
 
             NetworkServer.Spawn(networkedSpearClone);
             

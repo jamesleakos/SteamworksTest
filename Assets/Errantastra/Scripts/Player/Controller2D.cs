@@ -55,8 +55,9 @@ namespace Errantastra
 
                 if (hit)
                 {
-                    //velocity.x = (hit.distance - skinWidth) * directionX;
-                    velocity.x = 0;
+                    Debug.Log("Player just ran into " + hit.transform.name);
+
+                    velocity.x = (hit.distance - skinWidth) * directionX;
                     rayLength = hit.distance;
 
                     collisions.left = directionX == -1;
@@ -80,8 +81,8 @@ namespace Errantastra
 
                 if (hit)
                 {
-                    //velocity.y = (hit.distance - skinWidth) * directionY;
-                    velocity.y = 0;
+                    Debug.Log("Player just ran into " + hit.transform.name);
+                    velocity.y = (hit.distance - skinWidth) * directionY;
                     rayLength = hit.distance;
 
                     collisions.below = directionY == -1;
