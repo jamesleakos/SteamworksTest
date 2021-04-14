@@ -45,9 +45,6 @@ namespace Errantastra
 			//wait until the network is ready
             while (GameManager.GetInstance() == null || GameManager.GetInstance().localPlayer == null)
                 yield return null;
-
-            //play background music
-            AudioManager.PlayMusic(1);
         }
 
         public void UpdatePlayerUI ()

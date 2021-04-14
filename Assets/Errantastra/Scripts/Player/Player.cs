@@ -125,8 +125,6 @@ namespace Errantastra
             //before it gets overwritten by the network
             //maxHealth = health;
 
-
-
         }
 
         public override void OnStartClient ()
