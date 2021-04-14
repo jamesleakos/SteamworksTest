@@ -44,6 +44,7 @@ namespace Errantastra
         [Header("Body Parts")]
 
         public Transform bodyAndWeapons;
+        public GameObject lights;
 
         [HideInInspector]
         [SyncVar(hook = "OnHeadRotation")]
@@ -126,6 +127,12 @@ namespace Errantastra
 
 
 
+        }
+
+        public override void OnStartClient ()
+        {
+            base.OnStartClient();
+            if (!isLocalPlayer) lights.SetActive(false);
         }
 
         protected override void Start()

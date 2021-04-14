@@ -59,3 +59,6 @@ TagManager:
   - name: Tree Layer
     uniqueID: 282247525
     locked: 0
+  - name: Fog Layer
+    uniqueID: 2319626181
+    locked: 0

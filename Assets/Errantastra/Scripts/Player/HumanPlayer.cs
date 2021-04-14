@@ -201,6 +201,7 @@ namespace Errantastra {
         /// </summary>
         public override void OnStartClient()
         {
+            base.OnStartClient();
             //get corresponding team and colorize renderers in team color
             //Team team = GameManager.GetInstance().teams[teamIndex];
             // probably need to assign some color or something here
@@ -449,7 +450,7 @@ namespace Errantastra {
                 movementSpeed = blockSpeed;
                 if (!Input.GetKey(KeyCode.Mouse1)) RotateToMouse();
             }
-            else if (movementState == MovementState.running)
+            else if (movementState == MovementState.running && playerInput.magnitude > 0)
             {
                 movementSpeed = runSpeed;
                 RotateToMovementDirection(playerInput);
