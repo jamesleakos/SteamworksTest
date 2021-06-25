@@ -390,6 +390,7 @@ namespace Mirror
         /// <summary>Starts a network "host" - a server and client in the same application.</summary>
         public void StartHost()
         {
+            Debug.Log("NetworkManager.StartHost");
             if (NetworkServer.active || NetworkClient.active)
             {
                 Debug.LogWarning("Server or Client already started.");
@@ -1103,7 +1104,7 @@ namespace Mirror
 
         void OnServerAddPlayerInternal(NetworkConnection conn, AddPlayerMessage msg)
         {
-            //Debug.Log("NetworkManager.OnServerAddPlayer");
+            Debug.Log("NetworkManager.OnServerAddPlayerInternal");
 
             if (autoCreatePlayer && playerPrefab == null)
             {
@@ -1236,6 +1237,7 @@ namespace Mirror
         // TODO client only ever uses NetworkClient.connection. this parameter is redundant.
         public virtual void OnClientConnect(NetworkConnection conn)
         {
+            Debug.Log("NetworkManager.OnClientCOnnect");
             // OnClientConnect by default calls AddPlayer but it should not do
             // that when we have online/offline scenes. so we need the
             // clientLoadedScene flag to prevent it.

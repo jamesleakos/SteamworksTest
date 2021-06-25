@@ -11,7 +11,6 @@ namespace Errantastra
 {
     /// <summary>
     /// Manages game workflow and provides high-level access to networked logic during a game.
-    /// It manages functions such as team fill, scores and ending a game, but also video ad results.
     /// </summary>
 	public class GameManager : NetworkBehaviour
     {   
@@ -194,6 +193,12 @@ namespace Errantastra
         {
             teams[teamIndex].score = newScore;
             ui.UpdatePlayerUI();
+        }
+
+        public void LeaveGame()
+        {
+            if (isClientOnly) NetworkManager.singleton.StopClient();
+            else NetworkManager.singleton.StopHost();
         }
 
         /// <summary>
