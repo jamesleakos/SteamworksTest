@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Foundation Steam Settings
   m_EditorClassIdentifier: 
   applicationId:
-    m_AppId: 480
+    m_AppId: 1530220
   isDebugging: 1
   server:
     autoInitalize: 0

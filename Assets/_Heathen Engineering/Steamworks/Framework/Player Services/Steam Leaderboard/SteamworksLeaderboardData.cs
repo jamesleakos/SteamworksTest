@@ -217,7 +217,6 @@ namespace HeathenEngineering.SteamApi.PlayerServices
 
         private bool ProcessScoresDownloaded(LeaderboardScoresDownloaded_t param, bool bIOFailure)
         {
-
             bool playerIncluded = false;
             ///Check for the current users data in the record set and update accordingly
             if (!bIOFailure)
