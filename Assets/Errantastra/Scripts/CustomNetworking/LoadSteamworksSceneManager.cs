@@ -16,7 +16,7 @@ public class LoadSteamworksSceneManager : MonoBehaviour
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("StartScreen");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("StartScreen",LoadSceneMode.Additive);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

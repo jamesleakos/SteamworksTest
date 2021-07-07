@@ -79,7 +79,6 @@ namespace Errantastra
 
                 if (hit)
                 {
-                    Debug.Log("Player just ran into " + hit.transform.name);
                     velocity.y = (hit.distance - skinWidth) * directionY;
                     rayLength = hit.distance;
 

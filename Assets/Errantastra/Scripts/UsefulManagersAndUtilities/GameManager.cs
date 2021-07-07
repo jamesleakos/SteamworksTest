@@ -197,8 +197,21 @@ namespace Errantastra
 
         public void LeaveGame()
         {
-            if (isClientOnly) NetworkManager.singleton.StopClient();
-            else NetworkManager.singleton.StopHost();
+            Debug.Log("Stoping the host!");
+            NetworkManager.singleton.StopHost();
+
+            /***********************************************
+             * When we disconnect from a server we also 
+             * disconnect from the lobby if we have not 
+             * already done so
+             * 
+             * A Steam lobby cannot start a server twice so
+             * if we remain in this lobby we will never get
+             * another call to join a server
+             ***********************************************/
+
+            Debug.Log("Leaving the lobby!");
+            //LobbySettings.lobbies[0].Leave();
         }
 
         /// <summary>
