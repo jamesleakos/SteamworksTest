@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Errantastra/Scenes/LoadSteamworksStuff.unity
+    guid: 9ad45f3d81f5d624fb04569d47f16795
   - enabled: 1
     path: Assets/Errantastra/Scenes/StartScreen.unity
     guid: dbed79f223780cf4cb485cdddaa568f1
   - enabled: 1
     path: Assets/Errantastra/Scenes/TDM_Game.unity
     guid: 31e6264386ab7524c8b05daefe87bec3
+  - enabled: 1
+    path: Assets/Errantastra/Scenes/TestOtherStartScreen.unity
+    guid: a1ddaf21b552db84abbd94eefc3aea4f
   m_configObjects: {}
