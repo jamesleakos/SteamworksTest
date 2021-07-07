@@ -52,12 +52,16 @@ namespace HeathenEngineering.SteamApi.Networking
             Invoke(nameof(FetchSteamID), 1f);
         }
 
-        private void LateUpdate()
+        public override void ClientLateUpdate()
         {
-            if (enabled)
-            {
-                activeNode?.ReceiveData();
-            }
+            if (ClientActive())
+                client.ReceiveData();
+        }
+
+        public override void ServerLateUpdate()
+        {
+            if (ServerActive())
+                server.ReceiveData();
         }
 
         public override bool ClientConnected() => ClientActive() && client.Connected;

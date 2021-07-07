@@ -476,15 +476,22 @@ namespace HeathenEngineering.SteamApi.Networking
 
         void HandleLobbyEntered(LobbyEnter_t param)
         {
-            var lobby = lobbies.FirstOrDefault(p => p.id.m_SteamID == param.m_ulSteamIDLobby);
-            if(lobby == null)
+            if ((EChatRoomEnterResponse)param.m_EChatRoomEnterResponse == EChatRoomEnterResponse.k_EChatRoomEnterResponseError)
             {
-                lobby = new SteamLobby(new CSteamID(param.m_ulSteamIDLobby));
-                lobby.OnExitLobby.AddListener(HandleExitLobby);
-                lobbies.Add(lobby);
+                OnLobbyEnter.Invoke(null);
             }
+            else
+            {
+                var lobby = lobbies.FirstOrDefault(p => p.id.m_SteamID == param.m_ulSteamIDLobby);
+                if (lobby == null)
+                {
+                    lobby = new SteamLobby(new CSteamID(param.m_ulSteamIDLobby));
+                    lobby.OnExitLobby.AddListener(HandleExitLobby);
+                    lobbies.Add(lobby);
+                }
 
-            OnLobbyEnter.Invoke(lobby);
+                OnLobbyEnter.Invoke(lobby);
+            }
         }
 
         void HandleLobbyCreated(LobbyCreated_t param, bool bIOFailure)
